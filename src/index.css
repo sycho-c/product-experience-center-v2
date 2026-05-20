@@ -1,0 +1,44 @@
+@import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable.css');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  html,
+  body,
+  #root {
+    height: 100%;
+  }
+  body {
+    font-family: 'Pretendard Variable', Pretendard, -apple-system,
+      BlinkMacSystemFont, system-ui, Roboto, 'Apple SD Gothic Neo',
+      'Noto Sans KR', sans-serif;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+  :root {
+    color-scheme: light;
+  }
+}
+
+@layer utilities {
+  .stage-text-xs {
+    font-size: clamp(10px, 0.7vw, 12px);
+  }
+  .stage-text-sm {
+    font-size: clamp(11px, 0.85vw, 14px);
+  }
+  .stage-text-base {
+    font-size: clamp(13px, 1vw, 16px);
+  }
+  .stage-text-lg {
+    font-size: clamp(15px, 1.2vw, 18px);
+  }
+  .stage-gap {
+    gap: clamp(8px, 1.1vw, 16px);
+  }
+  .stage-padding {
+    padding: clamp(12px, 1.4vw, 20px);
+  }
+}
