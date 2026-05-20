@@ -1,0 +1,678 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>가온전선 SalesBridge · Cowork+ 시나리오 #03</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --brand-primary: #4F46E5; --brand-primary-soft: #EEF2FF; --brand-primary-deep: #3730A3;
+      --kakao-yellow: #FEE500; --kakao-bubble-me: #FFEB33; --kakao-bg: #B2C7DA; --kakao-ink: #371D1E;
+      --ink-primary: #0F172A; --ink-secondary: #475569; --ink-muted: #94A3B8;
+      --surface-canvas: #F8FAFC; --surface-border: #E2E8F0; --surface-subtle: #F1F5F9;
+      --accent-emerald: #10B981; --accent-emerald-soft: #D1FAE5;
+      --accent-amber: #F59E0B; --accent-amber-soft: #FEF3C7;
+      --accent-rose: #EF4444; --accent-rose-soft: #FEE2E2;
+      --accent-sky: #0EA5E9;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; color: var(--ink-primary); background: var(--surface-canvas); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: var(--brand-primary); text-decoration: none; } a:hover { text-decoration: underline; }
+    .topbar { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--surface-border); padding: 12px 24px; display: flex; align-items: center; gap: 16px; }
+    .topbar a.back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink-secondary); padding: 6px 10px; border-radius: 8px; }
+    .topbar a.back:hover { background: var(--surface-subtle); text-decoration: none; }
+    .topbar .crumbs { font-size: 12px; color: var(--ink-muted); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+    .hero { background: linear-gradient(135deg, #064E3B 0%, #047857 50%, #10B981 100%); color: white; border-radius: 24px; padding: 40px 40px 44px; position: relative; overflow: hidden; box-shadow: 0 24px 48px -16px rgba(4, 120, 87, 0.4); }
+    .hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 90% 10%, rgba(255,255,255,0.18), transparent 50%); pointer-events: none; }
+    .hero .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; margin-bottom: 12px; }
+    .hero h1 { font-size: 38px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 12px; line-height: 1.15; }
+    .hero .subtitle { font-size: 17px; opacity: 0.88; margin: 0 0 24px; max-width: 720px; }
+    .hero .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.18); backdrop-filter: blur(4px); }
+    .section { margin-top: 56px; }
+    .section h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 6px; display: flex; align-items: baseline; gap: 10px; }
+    .section h2 .num { font-size: 13px; font-weight: 700; color: var(--brand-primary); background: var(--brand-primary-soft); padding: 3px 8px; border-radius: 6px; letter-spacing: 0.04em; }
+    .section h2 .en { font-size: 12px; font-weight: 500; color: var(--ink-muted); margin-left: auto; }
+    .section .lead { color: var(--ink-secondary); margin: 0 0 24px; max-width: 760px; }
+    .personas { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .persona { display: flex; gap: 14px; align-items: center; background: white; border: 1px solid var(--surface-border); border-radius: 14px; padding: 16px 18px; }
+    .persona .avatar { width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center; color: white; font-weight: 700; font-size: 18px; }
+    .persona .role-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; background: var(--surface-subtle); color: var(--ink-secondary); margin-bottom: 4px; }
+    .persona .role-tag.internal { background: var(--brand-primary-soft); color: var(--brand-primary); }
+    .persona .role-tag.external { background: #FEF3C7; color: #92400E; }
+    .persona .name { font-weight: 700; font-size: 15px; }
+    .persona .role { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+    .diagram { background: white; border: 1px solid var(--surface-border); border-radius: 16px; padding: 24px; }
+    .diagram .panels-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .diagram .panel-title { margin: 0 0 10px; font-size: 10px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .diagram .systems-col { display: flex; flex-direction: column; gap: 8px; }
+    .sys-node { min-height: 56px; border: 2px solid var(--surface-border); border-radius: 10px; background: white; padding: 10px 12px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .sys-node.active { border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(79,70,229,0.12); }
+    .sys-node .sys-label { font-weight: 700; font-size: 13px; }
+    .sys-node .sys-en { font-size: 10px; color: var(--ink-muted); margin-top: 2px; }
+    .sys-node .sys-icon { position: absolute; top: 10px; right: 10px; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-size: 13px; }
+    .sys-node[data-accent="indigo"] .sys-icon { background: #EEF2FF; color: var(--brand-primary); }
+    .sys-node[data-accent="emerald"] .sys-icon { background: #D1FAE5; color: #047857; }
+    .sys-node[data-accent="amber"] .sys-icon { background: #FEF3C7; color: #B45309; }
+    .sys-node[data-accent="sky"] .sys-icon { background: #E0F2FE; color: #0369A1; }
+    .sys-node[data-accent="rose"] .sys-icon { background: #FEE2E2; color: #B91C1C; }
+    .diagram .devices-area { display: flex; flex-direction: column; gap: 8px; }
+    .device-card { background: var(--surface-subtle); border-radius: 12px; padding: 12px 14px; border: 1px solid var(--surface-border); display: flex; flex-direction: column; gap: 4px; }
+    .device-card .device-kind { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .device-card .device-name { font-weight: 700; font-size: 14px; color: var(--ink-primary); }
+    .device-card .device-role { font-size: 12px; color: var(--ink-secondary); }
+    .device-card .device-screen-hint { margin-top: 4px; padding: 6px 10px; background: white; border-radius: 6px; font-size: 11px; color: var(--ink-muted); border: 1px dashed var(--surface-border); }
+    /* Connection Map */
+    .connection-map { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--surface-border); }
+    .conn-table { display: flex; flex-direction: column; }
+    .conn-row { display: grid; grid-template-columns: 1.6fr 32px 2fr 1.8fr; gap: 12px; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--surface-border); }
+    .conn-row:last-child { border-bottom: none; }
+    .conn-from { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--ink-primary); font-size: 12px; padding: 6px 10px; background: var(--surface-subtle); border-radius: 8px; border-left: 3px solid var(--brand-primary); }
+    .conn-arrow { color: var(--brand-primary); font-weight: 700; font-size: 16px; text-align: center; }
+    .conn-arrow.bidi::before { content: '⇄'; }
+    .conn-arrow.uni::before { content: '→'; }
+    .conn-to { display: flex; gap: 4px; flex-wrap: wrap; }
+    .conn-dev { display: inline-flex; align-items: center; gap: 4px; background: var(--brand-primary-soft); color: var(--brand-primary); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+    .conn-label { color: var(--ink-secondary); font-size: 11px; font-style: italic; }
+    .before-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+    .before-issues { background: linear-gradient(180deg, #FFF1F2 0%, #FEE2E2 100%); border: 1px solid #FECDD3; border-radius: 16px; padding: 24px; }
+    .before-issues h3 { margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #9F1239; display: flex; align-items: center; gap: 8px; }
+    .before-issues h3::before { content: '⚠'; font-size: 18px; }
+    .before-issues p { color: #7F1D1D; font-size: 13px; margin: 0 0 14px; }
+    .before-issues ul { margin: 0; padding: 0; list-style: none; }
+    .before-issues li { padding: 10px 12px; background: rgba(255,255,255,0.7); border-radius: 10px; margin-bottom: 8px; font-size: 13px; color: #7F1D1D; border-left: 3px solid #DC2626; }
+    .before-issues li:last-child { margin-bottom: 0; }
+    .kakao-phone { width: 280px; aspect-ratio: 9 / 19.5; margin: 0 auto; background: #1F1F1F; border-radius: 36px; padding: 10px; position: relative; box-shadow: 0 24px 60px -20px rgba(0,0,0,0.25); }
+    .kakao-phone::before { content: ''; position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 90px; height: 24px; background: #1F1F1F; border-radius: 12px; z-index: 2; }
+    .kakao-screen { width: 100%; height: 100%; background: var(--kakao-bg); border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; }
+    .kakao-header { background: white; padding: 36px 14px 10px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--ink-primary); }
+    .kakao-header .back-arrow { color: var(--ink-muted); }
+    .kakao-header .name { flex: 1; }
+    .kakao-header .hamburger { color: var(--ink-muted); }
+    .kakao-body { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    .kakao-bubble { max-width: 78%; padding: 8px 11px; font-size: 12px; line-height: 1.45; }
+    .kakao-bubble.other { align-self: flex-start; background: white; color: var(--ink-primary); border-radius: 4px 16px 16px 16px; }
+    .kakao-bubble.me { align-self: flex-end; background: var(--kakao-bubble-me); color: var(--kakao-ink); border-radius: 16px 4px 16px 16px; }
+    .kakao-bubble .author { font-size: 11px; font-weight: 700; color: var(--ink-secondary); margin-bottom: 4px; }
+    .kakao-bubble-row { display: flex; gap: 4px; align-items: flex-end; }
+    .kakao-bubble-row.me { justify-content: flex-end; }
+    .kakao-bubble-row .time { font-size: 10px; color: rgba(31,17,18,0.6); }
+    .kakao-attach {
+      background: var(--surface-subtle); padding: 10px;
+      border-radius: 8px; font-size: 11px; color: var(--ink-secondary);
+      display: flex; align-items: center; gap: 6px;
+      max-width: 180px;
+    }
+    .before-label { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #B91C1C; margin-bottom: 12px; padding: 3px 8px; background: #FEE2E2; border-radius: 4px; }
+    .steps-track { display: flex; flex-direction: column; gap: 28px; }
+    .step-card { display: grid; grid-template-columns: 56px 1fr; gap: 20px; background: white; border: 1px solid var(--surface-border); border-radius: 18px; padding: 24px; position: relative; overflow: hidden; }
+    .step-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--brand-primary); }
+    .step-num { display: grid; place-items: center; width: 56px; height: 56px; background: var(--brand-primary); color: white; border-radius: 14px; font-weight: 800; font-size: 20px; box-shadow: 0 4px 12px rgba(79,70,229,0.3); }
+    .step-body h3 { margin: 0 0 6px; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+    .step-body .desc { margin: 0 0 14px; color: var(--ink-secondary); font-size: 14px; }
+    .step-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .meta-chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; background: var(--brand-primary-soft); color: var(--brand-primary); }
+    .meta-chip.system { background: #E0E7FF; color: var(--brand-primary-deep); }
+    .meta-chip.device { background: #ECFDF5; color: #047857; }
+    .meta-chip.connection { background: #FFEDD5; color: #C2410C; }
+    .step-mockup-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .mockup-frame { background: var(--surface-subtle); border-radius: 12px; padding: 14px; border: 1px solid var(--surface-border); }
+    .mockup-frame .frame-label { font-size: 10px; font-weight: 700; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .mockup-frame .frame-label .badge { background: var(--brand-primary); color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.04em; }
+    .cwk-chat { background: white; border: 1px solid var(--surface-border); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 6px; min-height: 60px; }
+    .cwk-header { font-size: 11px; font-weight: 700; color: var(--brand-primary); padding: 4px 8px; background: var(--brand-primary-soft); border-radius: 6px; margin-bottom: 4px; display: inline-block; align-self: flex-start; }
+    .cwk-bubble { max-width: 88%; padding: 6px 10px; font-size: 12px; line-height: 1.45; border-radius: 10px; }
+    .cwk-bubble.me { background: var(--brand-primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .cwk-bubble.other { background: white; color: var(--ink-primary); border: 1px solid var(--surface-border); align-self: flex-start; border-bottom-left-radius: 2px; }
+    .cwk-bubble.system { align-self: center; background: var(--surface-subtle); color: var(--ink-muted); font-size: 10px; padding: 4px 10px; border-radius: 8px; }
+    .cwk-bubble .author { font-size: 10px; font-weight: 700; opacity: 0.85; margin-bottom: 2px; }
+    .cwk-bubble.me .author { color: rgba(255,255,255,0.85); }
+    .cwk-bubble.other .author { color: var(--ink-secondary); }
+    .task-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; margin-top: 4px; }
+    .task-chip.processing { background: var(--accent-amber-soft); color: #92400E; }
+    .task-chip.done { background: var(--accent-emerald-soft); color: #065F46; }
+    .task-chip::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .attachment { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 11px; font-weight: 600; }
+    .cwk-bubble.other .attachment { background: var(--surface-subtle); color: var(--ink-primary); border-color: var(--surface-border); }
+    .cwk-bubble.me .attachment { color: white; }
+    .live-callout { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; background: #ECFDF5; border: 1px solid #6EE7B7; border-radius: 8px; font-size: 11px; font-weight: 600; color: #047857; margin-top: 8px; }
+    .live-callout::before { content: '✓'; }
+    /* Alimtalk card */
+    .alimtalk { background: white; border-radius: 10px; overflow: hidden; box-shadow: 0 4px 12px rgba(0,0,0,0.06); max-width: 280px; }
+    .alimtalk .alimtalk-header { background: var(--kakao-yellow); color: var(--kakao-ink); padding: 8px 12px; font-size: 11px; font-weight: 700; }
+    .alimtalk .alimtalk-body { padding: 12px; }
+    .alimtalk .alimtalk-title { font-size: 12px; font-weight: 700; color: var(--ink-primary); margin-bottom: 6px; }
+    .alimtalk .alimtalk-content { font-size: 11px; line-height: 1.5; color: var(--ink-secondary); padding: 8px; background: var(--surface-subtle); border-radius: 6px; margin-bottom: 10px; }
+    .alimtalk .alimtalk-button { width: 100%; padding: 8px; background: var(--kakao-yellow); color: var(--kakao-ink); border: none; border-radius: 6px; font-size: 11px; font-weight: 700; text-align: center; }
+    /* File library card */
+    .file-card {
+      background: white; border: 1px solid var(--surface-border);
+      border-radius: 10px; padding: 10px;
+      display: flex; align-items: center; gap: 10px;
+    }
+    .file-card .file-ico {
+      width: 36px; height: 36px; border-radius: 8px;
+      display: grid; place-items: center;
+      font-size: 11px; font-weight: 700; color: white;
+      flex-shrink: 0;
+    }
+    .file-card .file-ico.pdf { background: #DC2626; }
+    .file-card .file-ico.xlsx { background: #047857; }
+    .file-card .file-ico.dwg { background: #2563EB; }
+    .file-card .file-name { font-size: 12px; font-weight: 700; color: var(--ink-primary); }
+    .file-card .file-meta { font-size: 10px; color: var(--ink-muted); margin-top: 2px; }
+    .file-card .file-tag {
+      margin-left: auto; font-size: 9px; font-weight: 700;
+      padding: 2px 6px; border-radius: 4px;
+      background: var(--brand-primary-soft); color: var(--brand-primary);
+    }
+    /* Search bar */
+    .search-bar {
+      display: flex; align-items: center; gap: 8px;
+      background: white; border: 2px solid var(--brand-primary);
+      border-radius: 8px; padding: 8px 12px;
+    }
+    .search-bar .si { font-size: 14px; }
+    .search-bar input {
+      border: none; outline: none; font-size: 12px;
+      flex: 1; font-family: inherit;
+      color: var(--ink-primary); background: transparent;
+    }
+    .search-results {
+      margin-top: 8px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .search-results .hit {
+      background: white; border: 1px solid var(--surface-border);
+      border-radius: 8px; padding: 8px 10px;
+      font-size: 11px;
+    }
+    .search-results .hit .hit-room {
+      color: var(--brand-primary); font-weight: 700; font-size: 10px;
+    }
+    .search-results .hit .hit-text {
+      color: var(--ink-primary); margin: 2px 0;
+    }
+    .search-results .hit .hit-text mark {
+      background: var(--accent-amber-soft); color: #92400E;
+      padding: 0 2px; border-radius: 3px;
+    }
+    .search-results .hit .hit-meta {
+      font-size: 9px; color: var(--ink-muted);
+    }
+    .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .value-card { background: white; border: 1px solid var(--surface-border); border-radius: 14px; padding: 20px; border-left: 4px solid var(--brand-primary); }
+    .value-card h4 { margin: 0 0 6px; font-size: 14px; font-weight: 700; }
+    .value-card p { margin: 0; font-size: 13px; color: var(--ink-secondary); }
+    .metrics { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .metric { background: linear-gradient(135deg, var(--brand-primary-soft) 0%, white 100%); border: 1px solid var(--brand-primary-soft); border-radius: 12px; padding: 16px; text-align: center; }
+    .metric .num { font-size: 28px; font-weight: 800; color: var(--brand-primary); letter-spacing: -0.02em; }
+    .metric .label { font-size: 11px; color: var(--ink-secondary); margin-top: 4px; }
+    footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--surface-border); font-size: 12px; color: var(--ink-muted); display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; }
+    footer code { background: var(--surface-subtle); padding: 2px 6px; border-radius: 4px; font-size: 11px; color: var(--ink-secondary); }
+    @media (max-width: 880px) {
+      .before-grid { grid-template-columns: 1fr; }
+      .diagram .systems-col { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; }
+      .diagram .systems-col .sys-node { flex: 1 1 45%; }
+      .diagram .devices-area { margin-left: 0; margin-top: 16px; grid-template-columns: 1fr; }
+      .diagram svg.lines { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="./index.html" class="back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    시나리오 목록
+  </a>
+  <span class="crumbs">제품체험관 v2 · 4개 고객사 메인 시나리오 · #03</span>
+</nav>
+
+<div class="container">
+
+  <header class="hero">
+    <div class="eyebrow">Scenario #03 · 제조 / 전자부품</div>
+    <h1>가온전선 SalesBridge</h1>
+    <p class="subtitle">개인 카톡으로 흩어진 견적·도면 파일을 회사 자산으로 만들고, 자재번호 한 번 검색으로 두 달 전 견적을 그대로 재활용하는 흐름.</p>
+    <div class="chips">
+      <span class="chip">🏭 제조/전자부품</span>
+      <span class="chip">💬 다중 1:1 방</span>
+      <span class="chip">⏱ 8분 · 6단계</span>
+      <span class="chip">🔗 v2 id: gaon-cable-1to1</span>
+    </div>
+  </header>
+
+  <!-- SECTION A -->
+  <section class="section">
+    <h2><span class="num">A</span> 등장 페르소나 <span class="en">cast</span></h2>
+    <p class="lead">가온전선 영업팀 BR(내부)이 여러 거래처 대표와 각각 1:1 협업 채널을 동시에 운영. 본 시나리오는 그 중 한 채널(미우케이블 박대표)의 흐름이며, 모든 파일이 회사 파일 라이브러리로 자동 보관된다.</p>
+    <div class="personas">
+      <div class="persona">
+        <div class="avatar" style="background:#4F46E5;">강</div>
+        <div>
+          <span class="role-tag internal">INTERNAL · PC</span>
+          <div class="name">강승희</div>
+          <div class="role">영업팀 BR · 가온전선</div>
+        </div>
+      </div>
+      <div class="persona">
+        <div class="avatar" style="background:#10B981;">박</div>
+        <div>
+          <span class="role-tag external">EXTERNAL · MOBILE</span>
+          <div class="name">박대표</div>
+          <div class="role">미우케이블 대표 (거래처)</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION B -->
+  <section class="section">
+    <h2><span class="num">B</span> 시스템 연계 <span class="en">systems</span></h2>
+    <p class="lead">카카오 상담톡으로 채널을 만들고, 모든 첨부가 파일 라이브러리에 자동 적재되며, 견적엔진·SAP가 자재 메타로 검색을 가능하게 한다.</p>
+    <div class="diagram">
+      <div class="panels-row">
+        <div>
+          <h4 class="panel-title">시스템 (4)</h4>
+          <div class="systems-col">
+            <div class="sys-node" data-accent="amber">
+              <div class="sys-icon">💬</div>
+              <div class="sys-label">카카오 상담톡</div>
+              <div class="sys-en">AlimTalk Channel</div>
+            </div>
+            <div class="sys-node" data-accent="indigo">
+              <div class="sys-icon">💰</div>
+              <div class="sys-label">견적엔진</div>
+              <div class="sys-en">Quote Engine</div>
+            </div>
+            <div class="sys-node" data-accent="emerald">
+              <div class="sys-icon">📁</div>
+              <div class="sys-label">파일 라이브러리</div>
+              <div class="sys-en">File Library</div>
+            </div>
+            <div class="sys-node" data-accent="sky">
+              <div class="sys-icon">🏭</div>
+              <div class="sys-label">SAP 자재</div>
+              <div class="sys-en">SAP Material</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 class="panel-title">디바이스 (2)</h4>
+          <div class="devices-area">
+            <div class="device-card">
+              <span class="device-kind">💻 Workspace · PC</span>
+              <div class="device-name">강승희 · 영업팀 BR</div>
+              <div class="device-role">가온전선 협업 채널 호스트</div>
+              <div class="device-screen-hint">방 목록 · 파일 라이브러리 · 통합 검색 · 자재 검색 결과</div>
+            </div>
+            <div class="device-card">
+              <span class="device-kind">📱 Guest · Mobile</span>
+              <div class="device-name">박대표 · 미우케이블</div>
+              <div class="device-role">외부 거래처 (단일 1:1 방)</div>
+              <div class="device-screen-hint">사양서 PDF · 견적서 xlsx · 도면 dwg 전송</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="connection-map">
+        <h4 class="panel-title">연결 지도 (Connection Map)</h4>
+        <div class="conn-table">
+          <div class="conn-row">
+            <span class="conn-from">💬 카카오 상담톡</span>
+            <span class="conn-arrow uni"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 강승희 PC</span>
+              <span class="conn-dev">📱 박대표</span>
+            </span>
+            <span class="conn-label">협업 채널 초대 카드 발송 → 거래처 채널 입장</span>
+          </div>
+          <div class="conn-row">
+            <span class="conn-from">💰 견적엔진</span>
+            <span class="conn-arrow uni"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 강승희 PC</span>
+            </span>
+            <span class="conn-label">자재번호 기반 견적 산출 → 자동 할 일(마감 기한) 등록</span>
+          </div>
+          <div class="conn-row">
+            <span class="conn-from">📁 파일 라이브러리</span>
+            <span class="conn-arrow bidi"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 강승희 PC</span>
+              <span class="conn-dev">📱 박대표</span>
+            </span>
+            <span class="conn-label">사양서·견적서·도면 자동 자산화 (회사 BR 모두 검색 가능)</span>
+          </div>
+          <div class="conn-row">
+            <span class="conn-from">🏭 SAP 자재</span>
+            <span class="conn-arrow uni"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 강승희 PC</span>
+            </span>
+            <span class="conn-label">자재번호 통합 검색 (CC-22-150SQ) → 과거 견적·도면 일괄 조회</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION C -->
+  <section class="section">
+    <h2><span class="num">C</span> Before · 개인 카톡 영업 <span class="en">limitations</span></h2>
+    <p class="lead">견적서·도면이 개인 카톡으로만 오간다. 두 달 뒤 재발주가 오면 메시지 스크롤로 일일이 다시 찾아야 한다.</p>
+    <div class="before-grid">
+      <div class="before-issues">
+        <span class="before-label">Before</span>
+        <h3>개인 카톡 산재 협업의 한계</h3>
+        <p>개인 단말에 묶인 파일, 검색 불가한 히스토리, 인수인계 강제 불가.</p>
+        <ul>
+          <li>견적서·도면을 개인 카톡으로만 주고받음 — 회사 이력 없음</li>
+          <li>자재번호로 과거 대화·파일을 찾을 수 없음 — 수동 스크롤에 의존</li>
+          <li>같은 거래처 자료가 여러 BR의 개인 카톡에 분산</li>
+          <li>BR 퇴사 시 회사가 이력에 접근 불가, 인수인계 강제 불가</li>
+        </ul>
+      </div>
+      <div>
+        <div class="kakao-phone">
+          <div class="kakao-screen">
+            <div class="kakao-header">
+              <span class="back-arrow">‹</span>
+              <span class="name">박대표 (미우케이블)</span>
+              <span class="hamburger">☰</span>
+            </div>
+            <div class="kakao-body">
+              <div class="kakao-bubble-row">
+                <div class="kakao-bubble other">
+                  <div class="author">박대표</div>
+                  사양서 보내드려요
+                  <div class="kakao-attach" style="margin-top:6px;">📄 9월 발주 사양서.pdf</div>
+                </div>
+              </div>
+              <div class="kakao-bubble-row me">
+                <div class="kakao-bubble me">견적 회신 드릴게요
+                  <div class="kakao-attach" style="margin-top:6px; background:#FFFCE6;">📊 견적서_미우_240901.xlsx</div>
+                </div>
+              </div>
+              <div class="kakao-bubble-row">
+                <div class="kakao-bubble other">두 달 후… 다시 그 자재 견적 부탁드려요</div>
+              </div>
+              <div class="kakao-bubble-row me">
+                <div class="kakao-bubble me">잠시만요, 스크롤로 다시 찾아볼게요 😅</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION D -->
+  <section class="section">
+    <h2><span class="num">D</span> After · Cowork+ 단계별 흐름 <span class="en">step-by-step</span></h2>
+    <p class="lead">모든 파일이 회사 자산으로 보관되고, 자재번호 한 번 검색으로 과거 견적·도면을 그대로 재활용한다. 6단계.</p>
+
+    <div class="steps-track">
+
+      <!-- STEP 1 -->
+      <article class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>카카오 상담톡 초대 → 협업 채널 입장</h3>
+          <p class="desc">강승희가 PC에서 박대표를 외부 참여자로 선택해 협업 채널을 만들고, 카카오 상담톡 알림이 발송된다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">💬 AlimTalk</span>
+            <span class="meta-chip device">💻 강승희 PC</span>
+            <span class="meta-chip device">📱 박대표 Mobile</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">박대표 휴대폰 (상담톡 도착) <span class="badge">FROM 가온전선</span></div>
+              <div class="alimtalk">
+                <div class="alimtalk-header">상담톡 도착 · 카카오톡</div>
+                <div class="alimtalk-body">
+                  <div class="alimtalk-title">가온전선 협업 채널 초대</div>
+                  <div class="alimtalk-content">
+                    강승희 BR님이 박대표님을 협업 채널에 초대했습니다.<br/>
+                    아래 버튼을 눌러 채널에 입장해 주세요.
+                  </div>
+                  <div class="alimtalk-button">초대 수락 · 채널 입장</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 2 -->
+      <article class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>거래처 사양서 PDF 전송 → 파일 라이브러리 자동 보관</h3>
+          <p class="desc">박대표가 사양서 PDF를 보내면 즉시 회사 파일 라이브러리에 적재된다. 더 이상 강승희 개인 단말에만 보관되지 않는다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">📁 File Library</span>
+            <span class="meta-chip device">📱 박대표</span>
+            <span class="meta-chip device">💻 강승희</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">박대표 화면 (전송) </div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#가온-미우케이블</span>
+                <div class="cwk-bubble me">
+                  <div class="author">박대표</div>
+                  9월 발주 사양서입니다.<br/>
+                  <span class="attachment">📎 9월 발주 사양서.pdf · 2.3MB</span>
+                </div>
+                <div class="cwk-bubble system">파일 라이브러리에 자동 보관됨</div>
+              </div>
+            </div>
+            <div class="mockup-frame">
+              <div class="frame-label">파일 라이브러리 자산</div>
+              <div class="file-card">
+                <div class="file-ico pdf">PDF</div>
+                <div>
+                  <div class="file-name">9월 발주 사양서.pdf</div>
+                  <div class="file-meta">박대표 · 미우케이블 · 2.3MB</div>
+                </div>
+                <span class="file-tag">자산화</span>
+              </div>
+            </div>
+          </div>
+          <div class="live-callout">파일 라이브러리 등록 — 가온전선 영업팀 BR 모두 검색 가능</div>
+        </div>
+      </article>
+
+      <!-- STEP 3 -->
+      <article class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>견적 회신 약속 + 할 일 자동 등록 (마감 기한 포함)</h3>
+          <p class="desc">강승희가 "오늘 16:00까지 견적 회신"이라 답하면 메시지에서 마감 기한이 추출되어 할 일이 자동 등록된다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">💰 Quote Engine</span>
+            <span class="meta-chip device">💻 강승희</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">회신 + 할 일 chip</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#가온-미우케이블</span>
+                <div class="cwk-bubble other">
+                  <div class="author">박대표</div>
+                  견적 빨리 회신 가능할까요?
+                </div>
+                <div class="cwk-bubble me">
+                  <div class="author">강승희</div>
+                  네 오늘 16:00 까지 견적·도면 회신 드릴게요!
+                  <div><span class="task-chip processing">처리중 · 마감 16:00 · CC-22-150SQ</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 4 -->
+      <article class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>견적서 + 도면 회신 → 회사 자산 등록</h3>
+          <p class="desc">두 파일이 함께 전송되면 모두 파일 라이브러리에 자산화되고, 할 일 chip은 "완료"로 갱신된다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">📁 File Library</span>
+            <span class="meta-chip device">💻 강승희</span>
+            <span class="meta-chip device">📱 박대표</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">파일 회신</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#가온-미우케이블</span>
+                <div class="cwk-bubble me">
+                  <div class="author">강승희</div>
+                  견적서·도면 송부드립니다 ✅
+                  <div><span class="attachment">📊 견적서_미우_240901.xlsx</span></div>
+                  <div style="margin-top:4px;"><span class="attachment">📐 도면_CC-22-150SQ.dwg</span></div>
+                  <div><span class="task-chip done">완료</span></div>
+                </div>
+              </div>
+            </div>
+            <div class="mockup-frame">
+              <div class="frame-label">파일 라이브러리</div>
+              <div style="display:flex; flex-direction:column; gap:6px;">
+                <div class="file-card">
+                  <div class="file-ico xlsx">XLS</div>
+                  <div><div class="file-name">견적서_미우_240901.xlsx</div><div class="file-meta">강승희 · 156KB</div></div>
+                  <span class="file-tag">자산화</span>
+                </div>
+                <div class="file-card">
+                  <div class="file-ico dwg">DWG</div>
+                  <div><div class="file-name">도면_CC-22-150SQ.dwg</div><div class="file-meta">강승희 · 3.1MB</div></div>
+                  <span class="file-tag">자산화</span>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="live-callout">3개 파일 회사 자산 등록 완료</div>
+        </div>
+      </article>
+
+      <!-- STEP 5 -->
+      <article class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>두 달 후 재발주 — 자재번호 통합 검색</h3>
+          <p class="desc">박대표가 동일 자재를 재발주한다. 강승희가 "대화 조회"로 들어가 자재번호 "CC-22-150SQ"를 입력하면 과거 대화·견적서·도면이 한 번에 검색된다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">🏭 SAP 자재</span>
+            <span class="meta-chip device">💻 강승희</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">대화 조회 · 자재번호 검색</div>
+              <div class="search-bar">
+                <span class="si">🔍</span>
+                <input value="CC-22-150SQ" />
+              </div>
+              <div class="search-results">
+                <div class="hit">
+                  <div class="hit-room">#가온-미우케이블</div>
+                  <div class="hit-text">9월 발주 사양서 — <mark>CC-22-150SQ</mark> 150sqmm 케이블 1km</div>
+                  <div class="hit-meta">2개월 전 · 박대표</div>
+                </div>
+                <div class="hit">
+                  <div class="hit-room">#가온-미우케이블</div>
+                  <div class="hit-text">📊 견적서_미우_240901.xlsx · 📐 도면_<mark>CC-22-150SQ</mark>.dwg</div>
+                  <div class="hit-meta">2개월 전 · 강승희</div>
+                </div>
+                <div class="hit">
+                  <div class="hit-room">#가온-삼한케이블</div>
+                  <div class="hit-text"><mark>CC-22-150SQ</mark> 단가 견적 가능 — 단가 ₩4,200</div>
+                  <div class="hit-meta">3개월 전 · 다른 BR 채널</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 6 -->
+      <article class="step-card">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>과거 견적 재첨부 → 빠른 응대</h3>
+          <p class="desc">검색에서 확인한 두 달 전 견적서를 그대로 재첨부해 응대한다. 자재 재찾기·재작성 시간이 거의 사라진다.</p>
+          <div class="step-meta">
+            <span class="meta-chip device">💻 강승희</span>
+            <span class="meta-chip device">📱 박대표</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">강승희 → 박대표 재응대</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#가온-미우케이블</span>
+                <div class="cwk-bubble other"><div class="author">박대표</div>지난번 자재 재발주 부탁드려요</div>
+                <div class="cwk-bubble me">
+                  <div class="author">강승희</div>
+                  9월 견적과 동일 조건으로 진행 가능합니다 ✅
+                  <div><span class="attachment">📊 견적서_미우_240901.xlsx (재첨부)</span></div>
+                </div>
+                <div class="cwk-bubble system">파일 라이브러리에서 재활용 · 검색 → 첨부 (12초)</div>
+              </div>
+              <div class="live-callout">재찾기 시간 95% 단축 — 두 달 전 견적 그대로 활용</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SECTION E -->
+  <section class="section">
+    <h2><span class="num">E</span> After 가치 제안 + 핵심 메트릭 <span class="en">value</span></h2>
+    <div class="value-grid">
+      <div class="value-card">
+        <h4>📁 파일 자동 자산화</h4>
+        <p>모든 첨부 파일이 회사 파일 라이브러리에 자동 보관됩니다.</p>
+      </div>
+      <div class="value-card">
+        <h4>🔍 통합 검색</h4>
+        <p>자재번호 같은 업무 키워드로 과거 대화·파일을 일괄 조회합니다.</p>
+      </div>
+      <div class="value-card">
+        <h4>⚡ 재발주 가속</h4>
+        <p>검색 결과의 과거 파일을 그대로 재첨부해 응대 시간을 극적으로 줄입니다.</p>
+      </div>
+      <div class="value-card">
+        <h4>🛡 인수인계 강제</h4>
+        <p>BR이 바뀌어도 거래처 이력이 회사에 남습니다.</p>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="metric"><div class="num">10→100%</div><div class="label">과거 이력 검색 가능성</div></div>
+      <div class="metric"><div class="num">100%</div><div class="label">대화·파일 회사 가시성</div></div>
+      <div class="metric"><div class="num">−95%</div><div class="label">재발주 자료 재찾기 시간</div></div>
+      <div class="metric"><div class="num">0%</div><div class="label">퇴사 시 이력 소실 리스크</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <strong>v2 시나리오:</strong>
+      <code>src/scenarios/gaon-cable-1to1/</code>
+    </div>
+    <div>제품체험관 v2 · 4개 고객사 메인 시나리오 · 2026</div>
+  </footer>
+
+</div>
+
+</body>
+</html>

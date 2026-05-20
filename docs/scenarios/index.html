@@ -1,0 +1,619 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Cowork+ 4개 고객사 메인 시나리오 · 제품체험관 v2</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --brand-primary: #4F46E5; --brand-primary-soft: #EEF2FF; --brand-primary-deep: #3730A3;
+      --ink-primary: #0F172A; --ink-secondary: #475569; --ink-muted: #94A3B8;
+      --surface-canvas: #F8FAFC; --surface-border: #E2E8F0; --surface-subtle: #F1F5F9;
+      --accent-emerald: #10B981; --accent-rose: #EF4444;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      color: var(--ink-primary); background: var(--surface-canvas);
+      line-height: 1.55; -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--brand-primary); text-decoration: none; }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+
+    /* HERO */
+    .hero {
+      position: relative;
+      background: radial-gradient(circle at 0% 0%, #1E1B4B 0%, transparent 50%),
+                  radial-gradient(circle at 100% 0%, #831843 0%, transparent 60%),
+                  linear-gradient(135deg, #312E81 0%, #4F46E5 50%, #7C3AED 100%);
+      color: white; border-radius: 28px;
+      padding: 56px 48px 64px;
+      overflow: hidden;
+      box-shadow: 0 30px 60px -20px rgba(79, 70, 229, 0.5);
+    }
+    .hero::before {
+      content: ''; position: absolute; inset: 0;
+      background:
+        radial-gradient(circle at 90% 90%, rgba(255,255,255,0.12), transparent 40%),
+        url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='40' height='40'><circle cx='1' cy='1' r='1' fill='white' fill-opacity='0.05'/></svg>");
+      pointer-events: none;
+    }
+    .hero .logo-row {
+      display: flex; align-items: center; gap: 12px; margin-bottom: 24px;
+      position: relative; z-index: 1;
+    }
+    .hero .logo-prism {
+      width: 36px; height: 36px;
+      background: conic-gradient(from 0deg,
+        #EC4899 0deg, #F59E0B 60deg, #10B981 120deg,
+        #06B6D4 180deg, #3B82F6 240deg, #8B5CF6 300deg, #EC4899 360deg);
+      border-radius: 8px;
+      mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 2L2 7v10l10 5 10-5V7L12 2zm-7 9l7-3.5L19 11l-7 3.5L5 11zm0 4l7 3.5v-4L5 11v4zm14 0l-7 3.5v-4L19 11v4z'/></svg>");
+      mask-size: contain; mask-repeat: no-repeat;
+    }
+    .hero .brand-text {
+      font-weight: 800; font-size: 22px; letter-spacing: -0.01em;
+    }
+    .hero h1 {
+      font-size: 48px; font-weight: 800;
+      letter-spacing: -0.025em; margin: 0 0 16px;
+      line-height: 1.1; position: relative; z-index: 1;
+      max-width: 800px;
+    }
+    .hero p.tagline {
+      font-size: 18px; opacity: 0.85;
+      margin: 0; max-width: 720px;
+      position: relative; z-index: 1;
+    }
+    .hero .meta-row {
+      display: flex; flex-wrap: wrap; gap: 8px;
+      margin-top: 28px; position: relative; z-index: 1;
+    }
+    .hero .meta-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 6px 12px; border-radius: 999px;
+      font-size: 12px; font-weight: 600;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(4px);
+    }
+
+    /* SECTION 1 — 4 scenario cards */
+    .section { margin-top: 64px; }
+    .section h2 {
+      font-size: 26px; font-weight: 800;
+      letter-spacing: -0.015em;
+      margin: 0 0 8px;
+      display: flex; align-items: baseline; gap: 12px;
+    }
+    .section h2 .num {
+      font-size: 13px; font-weight: 700;
+      color: var(--brand-primary);
+      background: var(--brand-primary-soft);
+      padding: 4px 10px; border-radius: 6px;
+      letter-spacing: 0.04em;
+    }
+    .section h2 .en {
+      font-size: 12px; font-weight: 500;
+      color: var(--ink-muted); margin-left: auto;
+    }
+    .section .lead {
+      color: var(--ink-secondary); margin: 0 0 28px;
+      max-width: 760px; font-size: 15px;
+    }
+
+    .cards-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(420px, 1fr));
+      gap: 24px;
+    }
+    .scenario-card {
+      background: white;
+      border: 1px solid var(--surface-border);
+      border-radius: 20px;
+      overflow: hidden;
+      transition: transform 0.18s ease, box-shadow 0.18s ease;
+      display: flex; flex-direction: column;
+      text-decoration: none; color: inherit;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+    .scenario-card:hover {
+      transform: translateY(-4px);
+      box-shadow: 0 24px 48px -12px rgba(15, 23, 42, 0.18);
+      text-decoration: none;
+    }
+    .scenario-card .card-cover {
+      padding: 28px 28px 24px;
+      color: white;
+      position: relative; overflow: hidden;
+    }
+    .scenario-card .card-cover::after {
+      content: ''; position: absolute; right: -40px; top: -40px;
+      width: 180px; height: 180px;
+      background: radial-gradient(circle, rgba(255,255,255,0.18), transparent 70%);
+      pointer-events: none;
+    }
+    .scenario-card[data-industry="insurance"] .card-cover {
+      background: linear-gradient(135deg, #1E1B4B 0%, #4338CA 60%, #6366F1 100%);
+    }
+    .scenario-card[data-industry="finance"] .card-cover {
+      background: linear-gradient(135deg, #1E3A8A 0%, #3730A3 50%, #6366F1 100%);
+    }
+    .scenario-card[data-industry="manufacturing"] .card-cover {
+      background: linear-gradient(135deg, #064E3B 0%, #047857 50%, #10B981 100%);
+    }
+    .scenario-card[data-industry="rentacar"] .card-cover {
+      background: linear-gradient(135deg, #831843 0%, #BE185D 50%, #EC4899 100%);
+    }
+    .scenario-card .scenario-num {
+      font-size: 11px; font-weight: 700;
+      letter-spacing: 0.12em; text-transform: uppercase;
+      opacity: 0.85;
+      margin-bottom: 12px;
+    }
+    .scenario-card h3 {
+      font-size: 24px; font-weight: 800;
+      letter-spacing: -0.015em;
+      margin: 0 0 8px; line-height: 1.2;
+    }
+    .scenario-card .one-liner {
+      font-size: 14px; opacity: 0.88;
+      margin: 0 0 16px;
+    }
+    .scenario-card .card-chips {
+      display: flex; flex-wrap: wrap; gap: 6px;
+    }
+    .scenario-card .card-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 8px; border-radius: 999px;
+      font-size: 10px; font-weight: 600;
+      background: rgba(255,255,255,0.22);
+      backdrop-filter: blur(4px);
+    }
+    .scenario-card .card-body {
+      padding: 22px 28px 24px;
+      flex: 1; display: flex; flex-direction: column;
+    }
+    .scenario-card .feature-list {
+      list-style: none; padding: 0; margin: 0 0 16px;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+    .scenario-card .feature-list li {
+      font-size: 13px; color: var(--ink-secondary);
+      display: flex; gap: 8px;
+    }
+    .scenario-card .feature-list li::before {
+      content: '✓'; color: var(--brand-primary); font-weight: 700; flex-shrink: 0;
+    }
+    .scenario-card .cta-row {
+      display: flex; align-items: center; gap: 8px;
+      margin-top: auto;
+      padding-top: 16px;
+      border-top: 1px dashed var(--surface-border);
+    }
+    .scenario-card .cta-text {
+      flex: 1; font-size: 12px; color: var(--ink-muted);
+    }
+    .scenario-card .cta-text code {
+      background: var(--surface-subtle);
+      padding: 2px 6px; border-radius: 4px;
+      font-size: 11px; color: var(--ink-secondary);
+    }
+    .scenario-card .cta-button {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 8px 14px; border-radius: 10px;
+      background: var(--brand-primary); color: white;
+      font-size: 13px; font-weight: 700;
+    }
+    .scenario-card .cta-button svg {
+      transition: transform 0.18s ease;
+    }
+    .scenario-card:hover .cta-button svg {
+      transform: translateX(3px);
+    }
+
+    /* SECTION 2 — comparison matrix */
+    .matrix-card {
+      background: white; border: 1px solid var(--surface-border);
+      border-radius: 18px; padding: 8px;
+      overflow: hidden;
+    }
+    .matrix-wrap { overflow-x: auto; }
+    table.matrix {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+      min-width: 800px;
+    }
+    table.matrix th, table.matrix td {
+      padding: 12px 14px;
+      text-align: left;
+      vertical-align: middle;
+      border-bottom: 1px solid var(--surface-border);
+    }
+    table.matrix thead th {
+      background: var(--surface-subtle);
+      font-weight: 700;
+      color: var(--ink-secondary);
+      font-size: 12px;
+      letter-spacing: 0.02em;
+      position: sticky; top: 0;
+    }
+    table.matrix tbody tr:last-child td { border-bottom: none; }
+    table.matrix tbody tr.section-divider td {
+      background: linear-gradient(90deg, var(--brand-primary-soft), transparent);
+      font-weight: 700; color: var(--brand-primary);
+      font-size: 11px;
+      letter-spacing: 0.06em; text-transform: uppercase;
+      padding: 8px 14px;
+    }
+    table.matrix tbody td.label {
+      font-weight: 600;
+      color: var(--ink-primary);
+      background: white;
+    }
+    table.matrix td.center { text-align: center; }
+    table.matrix .y { color: var(--accent-emerald); font-weight: 700; }
+    table.matrix .n { color: var(--ink-muted); }
+    table.matrix .scenario-name {
+      display: flex; flex-direction: column; gap: 2px;
+    }
+    table.matrix .scenario-name .top { font-weight: 700; font-size: 12px; }
+    table.matrix .scenario-name .bot { font-size: 10px; color: var(--ink-muted); }
+    table.matrix thead th.col-icon {
+      text-align: center; min-width: 110px;
+    }
+    table.matrix thead th .industry-pill {
+      display: inline-block; padding: 2px 6px; border-radius: 4px;
+      font-size: 9px; font-weight: 700;
+      margin-bottom: 4px;
+    }
+    table.matrix thead th.h-ins .industry-pill { background: #EEF2FF; color: var(--brand-primary); }
+    table.matrix thead th.h-fin .industry-pill { background: #E0F2FE; color: #0369A1; }
+    table.matrix thead th.h-mfg .industry-pill { background: #D1FAE5; color: #047857; }
+    table.matrix thead th.h-rent .industry-pill { background: #FCE7F3; color: #BE185D; }
+
+    /* CTA bottom */
+    .bottom-cta {
+      margin-top: 64px;
+      background: linear-gradient(135deg, var(--brand-primary-soft) 0%, white 100%);
+      border: 1px solid var(--brand-primary-soft);
+      border-radius: 18px;
+      padding: 28px 32px;
+      display: flex; flex-wrap: wrap; align-items: center; gap: 16px;
+    }
+    .bottom-cta .text-side { flex: 1; min-width: 280px; }
+    .bottom-cta h3 {
+      margin: 0 0 4px; font-size: 18px; font-weight: 800;
+    }
+    .bottom-cta p { margin: 0; font-size: 13px; color: var(--ink-secondary); }
+    .bottom-cta code {
+      background: white; padding: 2px 6px; border-radius: 4px;
+      font-size: 12px;
+      border: 1px solid var(--surface-border);
+    }
+
+    footer.global-footer {
+      margin-top: 56px; padding-top: 24px;
+      border-top: 1px solid var(--surface-border);
+      font-size: 12px; color: var(--ink-muted);
+      display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between;
+    }
+
+    @media (max-width: 720px) {
+      .hero h1 { font-size: 32px; }
+      .hero { padding: 36px 28px 40px; }
+      .cards-grid { grid-template-columns: 1fr; }
+    }
+  </style>
+</head>
+<body>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="logo-row">
+      <div class="logo-prism"></div>
+      <div class="brand-text">Cowork+ Experience</div>
+    </div>
+    <h1>4개 고객사 메인 시나리오</h1>
+    <p class="tagline">개인 카톡으로 일하던 영업·설계·상담을 한 채널로 통합한다. 보험·금융·제조·렌터카, 각 산업이 마주한 문제를 Cowork+가 어떻게 풀어내는지 한눈에 보여주는 4개 시나리오.</p>
+    <div class="meta-row">
+      <span class="meta-chip">📅 2026 · 제품체험관 v2</span>
+      <span class="meta-chip">🏢 4개 고객사</span>
+      <span class="meta-chip">🎬 26 단계 합산</span>
+      <span class="meta-chip">⏱ 총 30분 분량</span>
+    </div>
+  </header>
+
+  <!-- SECTION 1 — Scenario Cards -->
+  <section class="section">
+    <h2>
+      <span class="num">01</span>
+      4개 시나리오 둘러보기
+      <span class="en">scenarios</span>
+    </h2>
+    <p class="lead">각 카드를 누르면 해당 고객사의 단계별 흐름·시스템 연계·Before/After 비교를 풀어 쓴 페이지로 이동합니다.</p>
+
+    <div class="cards-grid">
+
+      <!-- CARD 01 -->
+      <a class="scenario-card" data-industry="insurance" href="./01-insurance-hana.html">
+        <div class="card-cover">
+          <div class="scenario-num">Scenario #01 · 보험</div>
+          <h3>하나손해보험 GA 협업 채널</h3>
+          <p class="one-liner">손글씨 사진과 카톡 텍스트를 OCR/NER로 자동 추출해 한 채널 안에서 설계까지 완결.</p>
+          <div class="card-chips">
+            <span class="card-chip">🏥 보험사</span>
+            <span class="card-chip">💬 다중 1:1 방</span>
+            <span class="card-chip">⏱ 7단계</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="feature-list">
+            <li>OCR / NER 자동 추출 (사진 + 텍스트 동시)</li>
+            <li>여러 메시지 → 한 할 일 묶음 등록</li>
+            <li>SFA 고객 등록 → 동의서 → PDF 자동 회신</li>
+          </ul>
+          <div class="cta-row">
+            <span class="cta-text"><code>src/scenarios/insurance-1m/</code></span>
+            <span class="cta-button">
+              체험하기
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- CARD 02 -->
+      <a class="scenario-card" data-industry="finance" href="./02-credit-woori.html">
+        <div class="card-cover">
+          <div class="scenario-num">Scenario #02 · 금융/캐피탈</div>
+          <h3>우리금융캐피탈 강남BIZ AG 단체방</h3>
+          <p class="one-liner">70명 모집인 단체방 안에서 비밀 메시지로 내부 검토를 보호하고, 비즈폼·승인까지 완결.</p>
+          <div class="card-chips">
+            <span class="card-chip">🏦 금융</span>
+            <span class="card-chip">💬 70명 단체방</span>
+            <span class="card-chip">⏱ 6단계</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="feature-list">
+            <li>같은 AG 70명 단체방 · "AG명 / 이름" 식별</li>
+            <li>비밀 메시지로 내부 검토 노출 차단</li>
+            <li>비즈폼 · 신용평가 · 승인 워크플로우 자동 추적</li>
+          </ul>
+          <div class="cta-row">
+            <span class="cta-text"><code>src/scenarios/manufacturing-n1/</code></span>
+            <span class="cta-button">
+              체험하기
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- CARD 03 -->
+      <a class="scenario-card" data-industry="manufacturing" href="./03-cable-gaon.html">
+        <div class="card-cover">
+          <div class="scenario-num">Scenario #03 · 제조/전자부품</div>
+          <h3>가온전선 SalesBridge</h3>
+          <p class="one-liner">파일을 회사 자산으로 자동 적재하고, 자재번호 한 번 검색으로 두 달 전 견적을 그대로 재활용.</p>
+          <div class="card-chips">
+            <span class="card-chip">🏭 제조</span>
+            <span class="card-chip">💬 다중 1:1 방</span>
+            <span class="card-chip">⏱ 6단계</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="feature-list">
+            <li>모든 첨부 파일 자동 자산화 (개인 단말 의존 제거)</li>
+            <li>자재번호 통합 검색 — 대화·파일 한 번에 조회</li>
+            <li>재발주 시 과거 견적 그대로 재첨부 → 응대 95% 단축</li>
+          </ul>
+          <div class="cta-row">
+            <span class="cta-text"><code>src/scenarios/gaon-cable-1to1/</code></span>
+            <span class="cta-button">
+              체험하기
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+      <!-- CARD 04 -->
+      <a class="scenario-card" data-industry="rentacar" href="./04-rentacar-sk.html">
+        <div class="card-cover">
+          <div class="scenario-num">Scenario #04 · 렌터카/서비스</div>
+          <h3>SK렌터카 법인폰 SalesBridge</h3>
+          <p class="one-liner">200명 영업사원이 공식 카카오 상담톡으로 응대 · DB Mart 자산화 · 이직 시 12개 방 일괄 이관.</p>
+          <div class="card-chips">
+            <span class="card-chip">🚗 렌터카</span>
+            <span class="card-chip">💬 다중 1:1 방</span>
+            <span class="card-chip">⏱ 7단계</span>
+          </div>
+        </div>
+        <div class="card-body">
+          <ul class="feature-list">
+            <li>비즈뿌리오 알림톡 → 카카오 상담톡 공식 채널</li>
+            <li>FCM 푸시로 외근 중 즉시 응대 + 비즈폼 자산화</li>
+            <li>관리자가 영업사원 이직 시 12개 방 일괄 이관</li>
+          </ul>
+          <div class="cta-row">
+            <span class="cta-text"><code>src/scenarios/rentacar-nm/</code></span>
+            <span class="cta-button">
+              체험하기
+              <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="9 18 15 12 9 6"></polyline></svg>
+            </span>
+          </div>
+        </div>
+      </a>
+
+    </div>
+  </section>
+
+  <!-- SECTION 2 — Comparison Matrix -->
+  <section class="section">
+    <h2>
+      <span class="num">02</span>
+      4개 시나리오 비교 매트릭스
+      <span class="en">feature matrix</span>
+    </h2>
+    <p class="lead">모든 시나리오의 공통 구도는 <strong>개인 카톡 → 공식 협업 채널 + 정형화 + 자동 추적</strong>입니다. 차별화 포인트만 추리면 각 시나리오의 핵심이 한 줄로 보입니다.</p>
+
+    <div class="matrix-card">
+      <div class="matrix-wrap">
+        <table class="matrix">
+          <thead>
+            <tr>
+              <th>항목</th>
+              <th class="col-icon h-ins">
+                <div class="industry-pill">보험</div>
+                <div>하나손해보험</div>
+              </th>
+              <th class="col-icon h-fin">
+                <div class="industry-pill">금융</div>
+                <div>우리금융캐피탈</div>
+              </th>
+              <th class="col-icon h-mfg">
+                <div class="industry-pill">제조</div>
+                <div>가온전선</div>
+              </th>
+              <th class="col-icon h-rent">
+                <div class="industry-pill">렌터카</div>
+                <div>SK렌터카</div>
+              </th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr class="section-divider"><td colspan="5">구도</td></tr>
+            <tr>
+              <td class="label">대화방 패턴</td>
+              <td class="center">다중 1:1 방</td>
+              <td class="center">70명 단체방</td>
+              <td class="center">다중 1:1 방</td>
+              <td class="center">다중 1:1 방</td>
+            </tr>
+            <tr>
+              <td class="label">방 구조 (v2)</td>
+              <td class="center">per-guest</td>
+              <td class="center">shared-room</td>
+              <td class="center">per-guest</td>
+              <td class="center">per-guest</td>
+            </tr>
+            <tr>
+              <td class="label">시스템 수</td>
+              <td class="center">4</td>
+              <td class="center">4</td>
+              <td class="center">4</td>
+              <td class="center">5</td>
+            </tr>
+            <tr>
+              <td class="label">단계 수</td>
+              <td class="center">7</td>
+              <td class="center">6</td>
+              <td class="center">6</td>
+              <td class="center">7</td>
+            </tr>
+
+            <tr class="section-divider"><td colspan="5">핵심 기능</td></tr>
+            <tr>
+              <td class="label">OCR / NER 자동 추출</td>
+              <td class="center y">○</td>
+              <td class="center n">−</td>
+              <td class="center n">−</td>
+              <td class="center n">−</td>
+            </tr>
+            <tr>
+              <td class="label">비밀 메시지 (정보 분할)</td>
+              <td class="center n">−</td>
+              <td class="center y">○</td>
+              <td class="center n">−</td>
+              <td class="center n">−</td>
+            </tr>
+            <tr>
+              <td class="label">비즈폼</td>
+              <td class="center y">○ 가입설계동의서</td>
+              <td class="center y">○ 여신 한도 요청</td>
+              <td class="center n">−</td>
+              <td class="center y">○ 법인 정보 등록</td>
+            </tr>
+            <tr>
+              <td class="label">파일 라이브러리 (자산화)</td>
+              <td class="center n">−</td>
+              <td class="center n">−</td>
+              <td class="center y">○ File Library</td>
+              <td class="center y">○ DB Mart</td>
+            </tr>
+            <tr>
+              <td class="label">통합 검색 (재활용)</td>
+              <td class="center n">−</td>
+              <td class="center n">−</td>
+              <td class="center y">○ 자재번호 검색</td>
+              <td class="center y">○ DB Mart 조회</td>
+            </tr>
+            <tr>
+              <td class="label">할 일 (Task chip)</td>
+              <td class="center y">○ 다중 묶음</td>
+              <td class="center y">○</td>
+              <td class="center y">○ 마감 기한</td>
+              <td class="center y">○</td>
+            </tr>
+            <tr>
+              <td class="label">외부 시스템 자동 연계</td>
+              <td class="center y">○ SFA + Policy</td>
+              <td class="center y">○ Credit + Approval</td>
+              <td class="center y">○ SAP 자재</td>
+              <td class="center y">○ Action Power</td>
+            </tr>
+            <tr>
+              <td class="label">관리자 이관 (인수인계)</td>
+              <td class="center n">−</td>
+              <td class="center n">−</td>
+              <td class="center n">−</td>
+              <td class="center y">○ 12개 방 일괄</td>
+            </tr>
+
+            <tr class="section-divider"><td colspan="5">강조 메트릭</td></tr>
+            <tr>
+              <td class="label">차별화 포인트</td>
+              <td>AI 자동화로 비정형 → 정형</td>
+              <td>단체방 거버넌스 보호</td>
+              <td>이력·자산 재활용성 극대화</td>
+              <td>대규모 조직 자산화 + 이직 보존</td>
+            </tr>
+            <tr>
+              <td class="label">대표 메트릭</td>
+              <td>업무 등록 −75%</td>
+              <td>내부 검토 노출 0%</td>
+              <td>재찾기 시간 −95%</td>
+              <td>외부 채널 100→0%</td>
+            </tr>
+
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </section>
+
+  <!-- BOTTOM CTA -->
+  <section class="bottom-cta">
+    <div class="text-side">
+      <h3>v2 시나리오 코드와 함께 보기</h3>
+      <p>각 페이지의 푸터에는 대응되는 시나리오 파일 경로(<code>src/scenarios/{id}/</code>)가 표기되어 있어, 기획안과 구현을 1:1로 매칭할 수 있습니다.</p>
+    </div>
+  </section>
+
+  <footer class="global-footer">
+    <div>제품체험관 v2 · 4개 고객사 메인 시나리오 · 2026</div>
+    <div>Cowork+ Experience Center · 기획 산출물 v1</div>
+  </footer>
+
+</div>
+
+</body>
+</html>

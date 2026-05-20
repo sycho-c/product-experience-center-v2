@@ -1,0 +1,1190 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>하나손해보험 GA 협업 채널 · Cowork+ 시나리오 #01</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --brand-primary: #4F46E5;
+      --brand-primary-soft: #EEF2FF;
+      --brand-primary-deep: #3730A3;
+      --kakao-yellow: #FEE500;
+      --kakao-bubble-me: #FFEB33;
+      --kakao-bg: #B2C7DA;
+      --kakao-ink: #371D1E;
+      --ink-primary: #0F172A;
+      --ink-secondary: #475569;
+      --ink-muted: #94A3B8;
+      --surface-canvas: #F8FAFC;
+      --surface-border: #E2E8F0;
+      --surface-subtle: #F1F5F9;
+      --accent-emerald: #10B981;
+      --accent-emerald-soft: #D1FAE5;
+      --accent-amber: #F59E0B;
+      --accent-amber-soft: #FEF3C7;
+      --accent-rose: #EF4444;
+      --accent-rose-soft: #FEE2E2;
+      --accent-sky: #0EA5E9;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body {
+      font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif;
+      color: var(--ink-primary);
+      background: var(--surface-canvas);
+      line-height: 1.55;
+      -webkit-font-smoothing: antialiased;
+    }
+    a { color: var(--brand-primary); text-decoration: none; }
+    a:hover { text-decoration: underline; }
+
+    .topbar {
+      position: sticky; top: 0; z-index: 50;
+      background: rgba(255,255,255,0.92);
+      backdrop-filter: blur(8px);
+      border-bottom: 1px solid var(--surface-border);
+      padding: 12px 24px;
+      display: flex; align-items: center; gap: 16px;
+    }
+    .topbar a.back {
+      display: inline-flex; align-items: center; gap: 6px;
+      font-size: 13px; font-weight: 600;
+      color: var(--ink-secondary);
+      padding: 6px 10px; border-radius: 8px;
+    }
+    .topbar a.back:hover { background: var(--surface-subtle); text-decoration: none; }
+    .topbar .crumbs { font-size: 12px; color: var(--ink-muted); }
+
+    .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+
+    .hero {
+      background: linear-gradient(135deg, #1E1B4B 0%, #4338CA 60%, #6366F1 100%);
+      color: white; border-radius: 24px;
+      padding: 40px 40px 44px;
+      position: relative; overflow: hidden;
+      box-shadow: 0 24px 48px -16px rgba(67, 56, 202, 0.4);
+    }
+    .hero::after {
+      content: ''; position: absolute; inset: 0;
+      background: radial-gradient(circle at 90% 10%, rgba(255,255,255,0.18), transparent 50%);
+      pointer-events: none;
+    }
+    .hero .eyebrow {
+      font-size: 11px; font-weight: 700; letter-spacing: 0.12em;
+      text-transform: uppercase; opacity: 0.8; margin-bottom: 12px;
+    }
+    .hero h1 {
+      font-size: 38px; font-weight: 800; letter-spacing: -0.02em;
+      margin: 0 0 12px; line-height: 1.15;
+    }
+    .hero .subtitle {
+      font-size: 17px; opacity: 0.88;
+      margin: 0 0 24px; max-width: 720px;
+    }
+    .hero .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 5px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+      background: rgba(255,255,255,0.18);
+      backdrop-filter: blur(4px);
+    }
+
+    .section { margin-top: 56px; }
+    .section h2 {
+      font-size: 22px; font-weight: 800; letter-spacing: -0.01em;
+      margin: 0 0 6px; display: flex; align-items: baseline; gap: 10px;
+    }
+    .section h2 .num {
+      font-size: 13px; font-weight: 700;
+      color: var(--brand-primary);
+      background: var(--brand-primary-soft);
+      padding: 3px 8px; border-radius: 6px;
+      letter-spacing: 0.04em;
+    }
+    .section h2 .en { font-size: 12px; font-weight: 500; color: var(--ink-muted); margin-left: auto; }
+    .section .lead { color: var(--ink-secondary); margin: 0 0 24px; max-width: 760px; }
+
+    .card {
+      background: white;
+      border: 1px solid var(--surface-border);
+      border-radius: 16px;
+      padding: 24px;
+      box-shadow: 0 1px 3px rgba(0,0,0,0.02);
+    }
+
+    /* Section A — personas */
+    .personas { display: grid; grid-template-columns: repeat(auto-fit, minmax(240px, 1fr)); gap: 16px; }
+    .persona {
+      display: flex; gap: 14px; align-items: center;
+      background: white; border: 1px solid var(--surface-border);
+      border-radius: 14px; padding: 16px 18px;
+    }
+    .persona .avatar {
+      width: 48px; height: 48px; flex-shrink: 0;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      color: white; font-weight: 700; font-size: 18px;
+    }
+    .persona .role-tag {
+      display: inline-block; padding: 2px 8px; border-radius: 4px;
+      font-size: 10px; font-weight: 700;
+      background: var(--surface-subtle); color: var(--ink-secondary);
+      margin-bottom: 4px;
+    }
+    .persona .role-tag.internal { background: var(--brand-primary-soft); color: var(--brand-primary); }
+    .persona .role-tag.external { background: #FEF3C7; color: #92400E; }
+    .persona .name { font-weight: 700; font-size: 15px; }
+    .persona .role { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+
+    /* Section B — system diagram */
+    .diagram { background: white; border: 1px solid var(--surface-border); border-radius: 16px; padding: 24px; }
+    .diagram .panels-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .diagram .panel-title { margin: 0 0 10px; font-size: 10px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .diagram .systems-col { display: flex; flex-direction: column; gap: 8px; }
+    .sys-node { min-height: 56px; border: 2px solid var(--surface-border); border-radius: 10px; background: white; padding: 10px 12px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .sys-node.active { border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(79,70,229,0.12); }
+    .sys-node .sys-label { font-weight: 700; font-size: 13px; }
+    .sys-node .sys-en { font-size: 10px; color: var(--ink-muted); margin-top: 2px; }
+    .sys-node .sys-icon { position: absolute; top: 10px; right: 10px; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-size: 13px; }
+    .sys-node[data-accent="indigo"] .sys-icon { background: #EEF2FF; color: var(--brand-primary); }
+    .sys-node[data-accent="emerald"] .sys-icon { background: #D1FAE5; color: #047857; }
+    .sys-node[data-accent="amber"] .sys-icon { background: #FEF3C7; color: #B45309; }
+    .sys-node[data-accent="sky"] .sys-icon { background: #E0F2FE; color: #0369A1; }
+    .sys-node[data-accent="rose"] .sys-icon { background: #FEE2E2; color: #B91C1C; }
+    .diagram .devices-area { display: flex; flex-direction: column; gap: 8px; }
+    .device-card { background: var(--surface-subtle); border-radius: 12px; padding: 12px 14px; border: 1px solid var(--surface-border); display: flex; flex-direction: column; gap: 4px; }
+    .device-card .device-kind { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .device-card .device-name { font-weight: 700; font-size: 14px; color: var(--ink-primary); }
+    .device-card .device-role { font-size: 12px; color: var(--ink-secondary); }
+    .device-card .device-screen-hint { margin-top: 4px; padding: 6px 10px; background: white; border-radius: 6px; font-size: 11px; color: var(--ink-muted); border: 1px dashed var(--surface-border); }
+    /* Connection Map */
+    .connection-map { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--surface-border); }
+    .conn-table { display: flex; flex-direction: column; }
+    .conn-row { display: grid; grid-template-columns: 1.6fr 32px 2fr 1.8fr; gap: 12px; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--surface-border); }
+    .conn-row:last-child { border-bottom: none; }
+    .conn-from { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--ink-primary); font-size: 12px; padding: 6px 10px; background: var(--surface-subtle); border-radius: 8px; border-left: 3px solid var(--brand-primary); }
+    .conn-arrow { color: var(--brand-primary); font-weight: 700; font-size: 16px; text-align: center; }
+    .conn-arrow.bidi::before { content: '⇄'; }
+    .conn-arrow.uni::before { content: '→'; }
+    .conn-to { display: flex; gap: 4px; flex-wrap: wrap; }
+    .conn-dev { display: inline-flex; align-items: center; gap: 4px; background: var(--brand-primary-soft); color: var(--brand-primary); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+    .conn-label { color: var(--ink-secondary); font-size: 11px; font-style: italic; }
+
+    /* Section C — Before (kakao) */
+    .before-grid {
+      display: grid; grid-template-columns: 1fr 1fr; gap: 24px;
+      align-items: start;
+    }
+    .before-issues {
+      background: linear-gradient(180deg, #FFF1F2 0%, #FEE2E2 100%);
+      border: 1px solid #FECDD3; border-radius: 16px;
+      padding: 24px;
+    }
+    .before-issues h3 {
+      margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #9F1239;
+      display: flex; align-items: center; gap: 8px;
+    }
+    .before-issues h3::before { content: '⚠'; font-size: 18px; }
+    .before-issues p { color: #7F1D1D; font-size: 13px; margin: 0 0 14px; }
+    .before-issues ul { margin: 0; padding: 0; list-style: none; }
+    .before-issues li {
+      padding: 10px 12px; background: rgba(255,255,255,0.7);
+      border-radius: 10px; margin-bottom: 8px;
+      font-size: 13px; color: #7F1D1D;
+      border-left: 3px solid #DC2626;
+    }
+    .before-issues li:last-child { margin-bottom: 0; }
+
+    /* Kakao mobile mockup */
+    .kakao-phone {
+      width: 280px;
+      aspect-ratio: 9 / 19.5;
+      margin: 0 auto;
+      background: #1F1F1F;
+      border-radius: 36px;
+      padding: 10px;
+      position: relative;
+      box-shadow: 0 24px 60px -20px rgba(0,0,0,0.25);
+    }
+    .kakao-phone::before {
+      content: ''; position: absolute;
+      top: 14px; left: 50%; transform: translateX(-50%);
+      width: 90px; height: 24px;
+      background: #1F1F1F; border-radius: 12px;
+      z-index: 2;
+    }
+    .kakao-screen {
+      width: 100%; height: 100%;
+      background: var(--kakao-bg);
+      border-radius: 28px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+      position: relative;
+    }
+    .kakao-header {
+      background: white;
+      padding: 36px 14px 10px;
+      border-bottom: 1px solid #E5E7EB;
+      display: flex; align-items: center; gap: 8px;
+      font-size: 13px; font-weight: 700; color: var(--ink-primary);
+    }
+    .kakao-header .back-arrow { color: var(--ink-muted); }
+    .kakao-header .name { flex: 1; }
+    .kakao-header .hamburger { color: var(--ink-muted); }
+    .kakao-body {
+      flex: 1; padding: 12px;
+      overflow-y: auto;
+      display: flex; flex-direction: column; gap: 8px;
+    }
+    .kakao-bubble {
+      max-width: 78%; padding: 8px 11px;
+      font-size: 12px; line-height: 1.45;
+      position: relative;
+    }
+    .kakao-bubble.other {
+      align-self: flex-start;
+      background: white;
+      color: var(--ink-primary);
+      border-radius: 4px 16px 16px 16px;
+    }
+    .kakao-bubble.me {
+      align-self: flex-end;
+      background: var(--kakao-bubble-me);
+      color: var(--kakao-ink);
+      border-radius: 16px 4px 16px 16px;
+    }
+    .kakao-bubble .author {
+      font-size: 11px; font-weight: 700;
+      color: var(--ink-secondary);
+      margin-bottom: 4px;
+    }
+    .kakao-bubble.me .author { color: var(--kakao-ink); opacity: 0.7; }
+    .kakao-bubble .time {
+      font-size: 10px; color: var(--ink-muted);
+      margin: 0 4px;
+      align-self: flex-end;
+    }
+    .kakao-bubble-row { display: flex; gap: 4px; align-items: flex-end; }
+    .kakao-bubble-row.me { justify-content: flex-end; }
+    .kakao-bubble-row .time { font-size: 10px; color: rgba(31,17,18,0.6); }
+
+    /* Photo attachment inside a kakao bubble */
+    .kakao-bubble.has-photo {
+      padding: 4px !important;
+      max-width: 70% !important;
+      background: white !important;
+    }
+    .kakao-photo {
+      background:
+        linear-gradient(135deg, rgba(255,255,255,0.4), rgba(255,255,255,0) 60%),
+        repeating-linear-gradient(45deg, #E2E8F0 0 8px, #CBD5E1 8px 9px),
+        #94A3B8;
+      border-radius: 10px;
+      padding: 32px 12px 12px;
+      font-size: 10px;
+      color: white;
+      text-shadow: 0 1px 2px rgba(0,0,0,0.4);
+      text-align: center;
+      width: 100%;
+      min-height: 140px;
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      align-items: center;
+      gap: 2px;
+      position: relative;
+      overflow: hidden;
+    }
+    .kakao-photo::before {
+      content: '📷';
+      position: absolute; top: 12px; left: 50%; transform: translateX(-50%);
+      font-size: 22px;
+      background: rgba(255,255,255,0.95);
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      display: grid; place-items: center;
+      text-shadow: none;
+    }
+    .kakao-photo .ph-label {
+      background: rgba(0,0,0,0.45);
+      padding: 3px 8px; border-radius: 4px;
+      font-weight: 600;
+      letter-spacing: 0.02em;
+    }
+    .kakao-photo .ph-meta {
+      font-size: 9px; opacity: 0.85;
+    }
+
+    .before-label {
+      display: inline-block; font-size: 11px; font-weight: 700;
+      letter-spacing: 0.08em; text-transform: uppercase;
+      color: #B91C1C; margin-bottom: 12px;
+      padding: 3px 8px; background: #FEE2E2;
+      border-radius: 4px;
+    }
+
+    /* Section D — After Step cards */
+    .steps-track { display: flex; flex-direction: column; gap: 28px; }
+    .step-card {
+      display: grid; grid-template-columns: 56px 1fr; gap: 20px;
+      background: white; border: 1px solid var(--surface-border);
+      border-radius: 18px; padding: 24px;
+      position: relative; overflow: hidden;
+    }
+    .step-card::before {
+      content: ''; position: absolute; left: 0; top: 0; bottom: 0;
+      width: 4px; background: var(--brand-primary);
+    }
+    .step-num {
+      display: grid; place-items: center;
+      width: 56px; height: 56px;
+      background: var(--brand-primary);
+      color: white; border-radius: 14px;
+      font-weight: 800; font-size: 20px;
+      box-shadow: 0 4px 12px rgba(79,70,229,0.3);
+    }
+    .step-body h3 {
+      margin: 0 0 6px; font-size: 18px; font-weight: 800;
+      letter-spacing: -0.01em;
+    }
+    .step-body .desc { margin: 0 0 14px; color: var(--ink-secondary); font-size: 14px; }
+    .step-meta {
+      display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px;
+    }
+    .meta-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 4px 10px; border-radius: 999px;
+      font-size: 11px; font-weight: 600;
+      background: var(--brand-primary-soft); color: var(--brand-primary);
+    }
+    .meta-chip.system { background: #E0E7FF; color: var(--brand-primary-deep); }
+    .meta-chip.device { background: #ECFDF5; color: #047857; }
+    .meta-chip.connection { background: #FFEDD5; color: #C2410C; }
+
+    .step-mockup-row {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 14px;
+    }
+    .mockup-frame {
+      background: var(--surface-subtle);
+      border-radius: 12px;
+      padding: 14px;
+      border: 1px solid var(--surface-border);
+    }
+    .mockup-frame .frame-label {
+      font-size: 10px; font-weight: 700;
+      color: var(--ink-muted);
+      letter-spacing: 0.08em; text-transform: uppercase;
+      margin-bottom: 8px;
+      display: flex; justify-content: space-between; align-items: center;
+    }
+    .mockup-frame .frame-label .badge {
+      background: var(--brand-primary); color: white;
+      font-size: 9px; padding: 2px 6px; border-radius: 4px;
+      letter-spacing: 0.04em;
+    }
+
+    /* Cowork+ chat bubble */
+    .cwk-chat {
+      background: white; border: 1px solid var(--surface-border);
+      border-radius: 10px; padding: 10px;
+      display: flex; flex-direction: column; gap: 6px;
+      min-height: 60px;
+    }
+    .cwk-header {
+      font-size: 11px; font-weight: 700; color: var(--brand-primary);
+      padding: 4px 8px; background: var(--brand-primary-soft);
+      border-radius: 6px; margin-bottom: 4px;
+      display: inline-block; align-self: flex-start;
+    }
+    .cwk-bubble {
+      max-width: 88%; padding: 6px 10px;
+      font-size: 12px; line-height: 1.45; border-radius: 10px;
+    }
+    .cwk-bubble.me {
+      background: var(--brand-primary); color: white;
+      align-self: flex-end; border-bottom-right-radius: 2px;
+    }
+    .cwk-bubble.other {
+      background: white; color: var(--ink-primary);
+      border: 1px solid var(--surface-border);
+      align-self: flex-start; border-bottom-left-radius: 2px;
+    }
+    .cwk-bubble.system {
+      align-self: center; background: var(--surface-subtle);
+      color: var(--ink-muted); font-size: 10px;
+      padding: 4px 10px; border-radius: 8px;
+    }
+    .cwk-bubble .author {
+      font-size: 10px; font-weight: 700; opacity: 0.85;
+      margin-bottom: 2px;
+    }
+    .cwk-bubble.me .author { color: rgba(255,255,255,0.85); }
+    .cwk-bubble.other .author { color: var(--ink-secondary); }
+
+    .task-chip {
+      display: inline-flex; align-items: center; gap: 4px;
+      padding: 3px 8px; border-radius: 999px;
+      font-size: 10px; font-weight: 700;
+      margin-top: 4px;
+    }
+    .task-chip.processing { background: var(--accent-amber-soft); color: #92400E; }
+    .task-chip.done { background: var(--accent-emerald-soft); color: #065F46; }
+    .task-chip::before {
+      content: ''; width: 6px; height: 6px; border-radius: 50%;
+      background: currentColor;
+    }
+
+    .attachment {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 10px; background: rgba(255,255,255,0.15);
+      border: 1px solid rgba(255,255,255,0.3); border-radius: 8px;
+      font-size: 11px; font-weight: 600;
+    }
+    .cwk-bubble.other .attachment {
+      background: var(--surface-subtle); color: var(--ink-primary);
+      border-color: var(--surface-border);
+    }
+    .cwk-bubble.me .attachment { color: white; }
+
+    .biz-form-card {
+      background: white; border: 2px solid var(--brand-primary);
+      border-radius: 10px; padding: 10px;
+      margin-top: 4px;
+    }
+    .biz-form-card .bf-title {
+      font-size: 11px; font-weight: 700; color: var(--brand-primary);
+      display: flex; align-items: center; gap: 4px;
+      margin-bottom: 6px;
+    }
+    .biz-form-card .bf-rows { display: flex; flex-direction: column; gap: 4px; }
+    .biz-form-card .bf-row {
+      display: flex; justify-content: space-between;
+      font-size: 10px; padding: 4px 6px; background: var(--surface-subtle);
+      border-radius: 4px;
+    }
+    .biz-form-card .bf-row .label { color: var(--ink-muted); }
+    .biz-form-card .bf-row .value { font-weight: 600; color: var(--ink-primary); }
+    .biz-form-card .bf-action {
+      margin-top: 8px;
+      padding: 6px; text-align: center;
+      background: var(--brand-primary); color: white;
+      border-radius: 6px; font-size: 11px; font-weight: 700;
+    }
+
+    .live-callout {
+      display: inline-flex; align-items: center; gap: 6px;
+      padding: 6px 10px; background: #ECFDF5;
+      border: 1px solid #6EE7B7; border-radius: 8px;
+      font-size: 11px; font-weight: 600; color: #047857;
+      margin-top: 8px;
+    }
+    .live-callout::before { content: '✓'; }
+
+    /* Kakao notification card (알림톡) */
+    .alimtalk {
+      background: white; border-radius: 10px; overflow: hidden;
+      box-shadow: 0 4px 12px rgba(0,0,0,0.06);
+      max-width: 280px;
+    }
+    .alimtalk .alimtalk-header {
+      background: var(--kakao-yellow);
+      color: var(--kakao-ink);
+      padding: 8px 12px;
+      font-size: 11px; font-weight: 700;
+      display: flex; align-items: center; gap: 6px;
+    }
+    .alimtalk .alimtalk-header::before {
+      content: ''; width: 18px; height: 18px;
+      background: var(--kakao-ink); border-radius: 4px;
+      display: inline-block;
+      mask-image: url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24'><path fill='black' d='M12 3C6.48 3 2 6.58 2 11c0 2.78 1.7 5.22 4.3 6.66-.15.78-.66 2.83-.7 3.06-.06.3.15.31.32.23.13-.06 2.78-1.83 3.95-2.6.7.1 1.4.16 2.13.16 5.52 0 10-3.58 10-8s-4.48-8-10-8z'/></svg>");
+      mask-size: contain; mask-repeat: no-repeat;
+    }
+    .alimtalk .alimtalk-body {
+      padding: 12px;
+    }
+    .alimtalk .alimtalk-title {
+      font-size: 12px; font-weight: 700;
+      color: var(--ink-primary);
+      margin-bottom: 6px;
+    }
+    .alimtalk .alimtalk-content {
+      font-size: 11px; line-height: 1.5;
+      color: var(--ink-secondary);
+      padding: 8px;
+      background: var(--surface-subtle);
+      border-radius: 6px;
+      margin-bottom: 10px;
+    }
+    .alimtalk .alimtalk-button {
+      width: 100%;
+      padding: 8px;
+      background: var(--kakao-yellow);
+      color: var(--kakao-ink);
+      border: none; border-radius: 6px;
+      font-size: 11px; font-weight: 700;
+      cursor: pointer;
+      text-align: center;
+    }
+
+    /* Cowork+ phone mockup */
+    .cwk-phone {
+      width: 280px;
+      aspect-ratio: 9 / 19.5;
+      margin: 0 auto;
+      background: #1F2937;
+      border-radius: 36px;
+      padding: 10px;
+      position: relative;
+      box-shadow: 0 24px 60px -20px rgba(31,41,55,0.3);
+    }
+    .cwk-phone::before {
+      content: ''; position: absolute;
+      top: 14px; left: 50%; transform: translateX(-50%);
+      width: 90px; height: 24px;
+      background: #1F2937; border-radius: 12px;
+      z-index: 2;
+    }
+    .cwk-phone-screen {
+      width: 100%; height: 100%;
+      background: white;
+      border-radius: 28px;
+      overflow: hidden;
+      display: flex; flex-direction: column;
+    }
+    .cwk-phone-header {
+      padding: 36px 14px 10px;
+      border-bottom: 1px solid var(--surface-border);
+      display: flex; align-items: center; gap: 8px;
+      font-size: 11px;
+    }
+    .cwk-phone-header .brand {
+      display: inline-flex; align-items: center; gap: 4px;
+      font-weight: 800; color: var(--brand-primary);
+    }
+    .cwk-phone-header .room-name {
+      flex: 1; font-weight: 700; color: var(--ink-primary);
+      text-align: center;
+    }
+    .cwk-phone-body {
+      flex: 1; padding: 10px;
+      background: var(--surface-canvas);
+      overflow-y: auto;
+      display: flex; flex-direction: column; gap: 6px;
+    }
+
+    /* Cowork+ PC mockup */
+    .cwk-pc {
+      background: #E2E8F0;
+      border-radius: 16px;
+      padding: 8px;
+      box-shadow: 0 12px 32px -8px rgba(0,0,0,0.12);
+    }
+    .cwk-pc-bezel {
+      background: #1F2937;
+      border-radius: 12px;
+      padding: 8px;
+    }
+    .cwk-pc-bezel::before {
+      content: ''; display: block;
+      margin-bottom: 6px;
+      width: 36px; height: 8px;
+      background: radial-gradient(circle, #DC2626 0 25%, transparent 25%) 0 50%/16px 8px no-repeat,
+                  radial-gradient(circle, #F59E0B 0 25%, transparent 25%) 8px 50%/16px 8px no-repeat,
+                  radial-gradient(circle, #10B981 0 25%, transparent 25%) 16px 50%/16px 8px no-repeat;
+    }
+    .cwk-pc-screen {
+      background: white;
+      border-radius: 8px;
+      padding: 12px;
+      display: grid; grid-template-columns: 100px 1fr 120px;
+      gap: 8px;
+      min-height: 200px;
+    }
+    .cwk-pc-rail {
+      background: var(--surface-subtle);
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 9px;
+      color: var(--ink-secondary);
+    }
+    .cwk-pc-rail .rail-item {
+      padding: 4px 6px; margin-bottom: 3px;
+      background: white; border-radius: 4px;
+      border: 1px solid var(--surface-border);
+    }
+    .cwk-pc-rail .rail-item.active { border-color: var(--brand-primary); background: var(--brand-primary-soft); color: var(--brand-primary); font-weight: 700; }
+    .cwk-pc-chat {
+      display: flex; flex-direction: column; gap: 4px;
+    }
+    .cwk-pc-rightrail {
+      background: var(--surface-subtle);
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 9px;
+    }
+    .cwk-pc-rightrail .rr-title { font-weight: 700; color: var(--ink-secondary); margin-bottom: 6px; }
+    .cwk-pc-rightrail .rr-item {
+      padding: 4px 6px; margin-bottom: 3px;
+      background: white; border-radius: 4px;
+      border: 1px solid var(--surface-border);
+      font-size: 9px;
+    }
+
+    /* Section E — value & metrics */
+    .value-grid {
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px;
+    }
+    .value-card {
+      background: white; border: 1px solid var(--surface-border);
+      border-radius: 14px; padding: 20px;
+      border-left: 4px solid var(--brand-primary);
+    }
+    .value-card h4 { margin: 0 0 6px; font-size: 14px; font-weight: 700; }
+    .value-card p { margin: 0; font-size: 13px; color: var(--ink-secondary); }
+
+    .metrics {
+      margin-top: 16px;
+      display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px;
+    }
+    .metric {
+      background: linear-gradient(135deg, var(--brand-primary-soft) 0%, white 100%);
+      border: 1px solid var(--brand-primary-soft);
+      border-radius: 12px; padding: 16px;
+      text-align: center;
+    }
+    .metric .num {
+      font-size: 28px; font-weight: 800;
+      color: var(--brand-primary);
+      letter-spacing: -0.02em;
+    }
+    .metric .label {
+      font-size: 11px; color: var(--ink-secondary);
+      margin-top: 4px;
+    }
+
+    footer {
+      margin-top: 80px; padding-top: 24px;
+      border-top: 1px solid var(--surface-border);
+      font-size: 12px; color: var(--ink-muted);
+      display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between;
+    }
+    footer code {
+      background: var(--surface-subtle); padding: 2px 6px;
+      border-radius: 4px; font-size: 11px; color: var(--ink-secondary);
+    }
+
+    @media (max-width: 880px) {
+      .before-grid { grid-template-columns: 1fr; }
+      .diagram .systems-col { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; }
+      .diagram .systems-col .sys-node { flex: 1 1 45%; }
+      .diagram .devices-area { margin-left: 0; margin-top: 16px; grid-template-columns: 1fr; }
+      .diagram svg.lines { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="./index.html" class="back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    시나리오 목록
+  </a>
+  <span class="crumbs">제품체험관 v2 · 4개 고객사 메인 시나리오 · #01</span>
+</nav>
+
+<div class="container">
+
+  <!-- HERO -->
+  <header class="hero">
+    <div class="eyebrow">Scenario #01 · 보험</div>
+    <h1>하나손해보험 GA 협업 채널</h1>
+    <p class="subtitle">개인 카톡으로 흩어진 설계 요청을 OCR/NER로 자동 추출하고, 외부 시스템과 연계해 한 채널 안에서 고객 등록·동의서·설계서까지 완결하는 흐름.</p>
+    <div class="chips">
+      <span class="chip">🏥 보험사</span>
+      <span class="chip">💬 다중 1:1 방</span>
+      <span class="chip">⏱ 7분 · 7단계</span>
+      <span class="chip">🔗 v2 id: insurance-1m</span>
+    </div>
+  </header>
+
+  <!-- SECTION A — PERSONAS -->
+  <section class="section">
+    <h2><span class="num">A</span> 등장 페르소나 <span class="en">cast</span></h2>
+    <p class="lead">설계매니저(하나손해보험 내부)가 여러 GA 영업가족(외부 설계사)과 각각 1:1 협업 채널을 동시에 운영. 본 시나리오는 그 중 한 채널(김철수)에서 일어나는 흐름을 다룬다.</p>
+    <div class="personas">
+      <div class="persona">
+        <div class="avatar" style="background:#4F46E5;">김</div>
+        <div>
+          <span class="role-tag internal">INTERNAL · PC</span>
+          <div class="name">김도윤</div>
+          <div class="role">설계매니저 · 하나손해보험</div>
+        </div>
+      </div>
+      <div class="persona">
+        <div class="avatar" style="background:#10B981;">철</div>
+        <div>
+          <span class="role-tag external">EXTERNAL · MOBILE</span>
+          <div class="name">김철수</div>
+          <div class="role">영업가족(5250223) · 에즈금융서비스 TM</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION B — SYSTEM DIAGRAM -->
+  <section class="section">
+    <h2><span class="num">B</span> 시스템 연계 <span class="en">systems</span></h2>
+    <p class="lead">알림톡으로 채널을 열고, OCR/NER이 메시지에서 정보를 추출하면, SFA로 고객을 등록하고 Policy 시스템에서 가입설계가 자동 회신된다.</p>
+    <div class="diagram">
+      <div class="panels-row">
+        <div>
+          <h4 class="panel-title">시스템 (4)</h4>
+          <div class="systems-col">
+            <div class="sys-node" data-accent="amber">
+              <div class="sys-icon">📨</div>
+              <div class="sys-label">카카오 알림톡</div>
+              <div class="sys-en">AlimTalk</div>
+            </div>
+            <div class="sys-node" data-accent="indigo">
+              <div class="sys-icon">🔍</div>
+              <div class="sys-label">OCR / NER</div>
+              <div class="sys-en">손글씨·텍스트 자동 추출</div>
+            </div>
+            <div class="sys-node" data-accent="emerald">
+              <div class="sys-icon">👥</div>
+              <div class="sys-label">영업 SFA</div>
+              <div class="sys-en">고객 등록·조회</div>
+            </div>
+            <div class="sys-node" data-accent="sky">
+              <div class="sys-icon">📜</div>
+              <div class="sys-label">가입설계 시스템</div>
+              <div class="sys-en">Policy Engine</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 class="panel-title">디바이스 (2)</h4>
+          <div class="devices-area">
+            <div class="device-card">
+              <span class="device-kind">💻 Workspace · PC</span>
+              <div class="device-name">김도윤 · 설계매니저</div>
+              <div class="device-role">하나손해보험 협업 채널 호스트</div>
+              <div class="device-screen-hint">방 목록 · OCR/NER 자동 입력 모달 · 할 일 RightRail</div>
+            </div>
+            <div class="device-card">
+              <span class="device-kind">📱 Guest · Mobile</span>
+              <div class="device-name">김철수 · 영업가족</div>
+              <div class="device-role">에즈금융서비스 외부 설계사</div>
+              <div class="device-screen-hint">단일 1:1 방 · 비즈폼 inline 카드 · 가입설계 PDF</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="connection-map">
+        <h4 class="panel-title">연결 지도 (Connection Map)</h4>
+        <div class="conn-table">
+          <div class="conn-row">
+            <span class="conn-from">📨 카카오 알림톡</span>
+            <span class="conn-arrow uni"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 김도윤 PC</span>
+              <span class="conn-dev">📱 김철수</span>
+            </span>
+            <span class="conn-label">협업 채널 초대 카드 발송 → 김철수 채널 입장</span>
+          </div>
+          <div class="conn-row">
+            <span class="conn-from">🔍 OCR / NER</span>
+            <span class="conn-arrow uni"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 김도윤 PC</span>
+            </span>
+            <span class="conn-label">손글씨 사진(고객 5필드) + 텍스트(보험종류·월납입) 자동 추출</span>
+          </div>
+          <div class="conn-row">
+            <span class="conn-from">👥 영업 SFA</span>
+            <span class="conn-arrow bidi"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 김도윤 PC</span>
+            </span>
+            <span class="conn-label">OCR 결과로 고객 자동 등록 · 동의서 발송 트리거</span>
+          </div>
+          <div class="conn-row">
+            <span class="conn-from">📜 가입설계 시스템</span>
+            <span class="conn-arrow uni"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 김도윤 PC</span>
+              <span class="conn-dev">📱 김철수</span>
+            </span>
+            <span class="conn-label">설계서 자동 생성 → 협업 채널로 PDF 자동 회신</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION C — BEFORE -->
+  <section class="section">
+    <h2><span class="num">C</span> Before · 카카오톡으로 일할 때 <span class="en">limitations</span></h2>
+    <p class="lead">설계사가 종이 메모를 사진으로 보내고, 매니저는 매번 정보를 수동으로 옮긴다. 같은 고객의 요청이 여러 카톡방에 분산된다.</p>
+    <div class="before-grid">
+      <div class="before-issues">
+        <span class="before-label">Before</span>
+        <h3>카카오톡 일상 업무의 한계</h3>
+        <p>개인 카톡에 흩어진 비정형 정보, 매니저의 손으로 다시 옮겨야 하는 반복 작업.</p>
+        <ul>
+          <li>종이에 적힌 고객정보를 사진으로 받음 — 시스템 자동 입력 불가</li>
+          <li>설계매니저가 외부 메모장에 직접 다시 적어 외부 시스템으로 옮김</li>
+          <li>같은 고객의 요청이 여러 카톡방에 분산 — 통합 이력 추적 불가</li>
+          <li>알림톡·고객 등록·동의서·설계서가 각각 다른 시스템·다른 채널</li>
+        </ul>
+      </div>
+      <div>
+        <div class="kakao-phone">
+          <div class="kakao-screen">
+            <div class="kakao-header">
+              <span class="back-arrow">‹</span>
+              <span class="name">김철수 영업가족</span>
+              <span class="hamburger">☰</span>
+            </div>
+            <div class="kakao-body">
+              <div class="kakao-bubble-row">
+                <div class="kakao-bubble other">매니저님 고객정보 보내드려요</div>
+              </div>
+              <div class="kakao-bubble-row">
+                <div class="kakao-bubble other has-photo">
+                  <div class="kakao-photo">
+                    <span class="ph-label">손글씨 고객정보</span>
+                    <span class="ph-meta">이름 · 주민번호 · 주소</span>
+                  </div>
+                </div>
+              </div>
+              <div class="kakao-bubble-row">
+                <div class="kakao-bubble other">월 15만원 종신보험 설계 부탁드립니다</div>
+                <span class="time">14:08</span>
+              </div>
+              <div class="kakao-bubble-row me">
+                <span class="time">14:09</span>
+                <div class="kakao-bubble me">네, 메모장에 옮겨 적고 다시 연락 드리겠습니다</div>
+              </div>
+              <div class="kakao-bubble-row me">
+                <span class="time">14:11</span>
+                <div class="kakao-bubble me">고객 등록은 별도 시스템에서 진행됩니다 ㅠ</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION D — AFTER STEPS -->
+  <section class="section">
+    <h2><span class="num">D</span> After · Cowork+ 단계별 흐름 <span class="en">step-by-step</span></h2>
+    <p class="lead">한 협업 채널 안에서 알림톡 초대 → OCR/NER 자동 추출 → 고객 등록 → 동의서 → 가입설계까지 완결된다. 7단계.</p>
+
+    <div class="steps-track">
+
+      <!-- STEP 1 -->
+      <article class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>대화 채널 생성 + 카카오 알림톡 발송</h3>
+          <p class="desc">설계매니저가 PC에서 외부 영업가족 김철수를 검색해 협업 채널을 만들고, 카카오 알림톡으로 초대 카드가 발송된다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">⚙ 카카오 알림톡</span>
+            <span class="meta-chip device">💻 김도윤 PC</span>
+            <span class="meta-chip device">📱 김철수 Mobile</span>
+            <span class="meta-chip connection">→ c-alim-guest</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">김철수 휴대폰 (알림톡 도착) <span class="badge">FROM 하나손보</span></div>
+              <div class="alimtalk">
+                <div class="alimtalk-header">알림톡 도착 · 카카오톡</div>
+                <div class="alimtalk-body">
+                  <div class="alimtalk-title">하나손해보험 협업 채널 초대</div>
+                  <div class="alimtalk-content">
+                    설계매니저 김도윤님이 영업가족 김철수님을 협업 채널에 초대했습니다.<br/>
+                    아래 버튼을 눌러 채널에 입장해 주세요.
+                  </div>
+                  <button class="alimtalk-button">초대 수락 · 채널 입장</button>
+                </div>
+              </div>
+            </div>
+            <div class="mockup-frame">
+              <div class="frame-label">김도윤 Workspace</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#GA협업 · 김철수</span>
+                <div class="cwk-bubble system">시스템: 채널 생성 완료 · 알림톡 발송 (1건)</div>
+                <div class="live-callout">알림톡 발송 — 김철수 (010-1234-5678)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 2 -->
+      <article class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>설계사 입장 + 인사 교환</h3>
+          <p class="desc">김철수가 알림톡의 "초대 수락" 버튼을 눌러 협업 채널에 입장하고, 짧은 인사를 주고받는다.</p>
+          <div class="step-meta">
+            <span class="meta-chip device">💻 김도윤 PC</span>
+            <span class="meta-chip device">📱 김철수 Mobile</span>
+            <span class="meta-chip connection">⇆ c-ws-guest 펄스</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">협업 채널 · 첫 메시지</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#GA협업 · 김철수</span>
+                <div class="cwk-bubble system">김철수님이 채널에 입장했습니다</div>
+                <div class="cwk-bubble me">
+                  <div class="author">김도윤 (호스트)</div>
+                  안녕하세요 김철수님! 협업 채널 만들었습니다 👋
+                </div>
+                <div class="cwk-bubble other">
+                  <div class="author">김철수</div>
+                  안녕하세요 매니저님, 잘 부탁드립니다
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 3 -->
+      <article class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>손글씨 사진 + 설계 요청 전송</h3>
+          <p class="desc">김철수가 종이에 적은 고객정보 사진과 "월 15만원 종신보험" 텍스트 요청을 함께 전송한다.</p>
+          <div class="step-meta">
+            <span class="meta-chip device">📱 김철수 Mobile</span>
+            <span class="meta-chip device">💻 김도윤 PC</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">김도윤 화면 (수신)</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#GA협업 · 김철수</span>
+                <div class="cwk-bubble other">
+                  <div class="author">김철수</div>
+                  <span class="attachment">📷 customer_info.jpg</span>
+                </div>
+                <div class="cwk-bubble other">
+                  <div class="author">김철수</div>
+                  월 15만원 종신보험으로 설계 부탁드립니다.<br/>가족 4인 보장형 선호하십니다.
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 4 -->
+      <article class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>OCR / NER 자동 추출 → 할 일 묶음</h3>
+          <p class="desc">설계매니저가 사진 메시지 + 텍스트 메시지 2건을 함께 선택해 "할 일 생성"을 누른다. 시스템이 OCR로 고객 5필드, NER로 보험종류·월납입을 자동 입력한다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">⚙ OCR</span>
+            <span class="meta-chip system">⚙ NER</span>
+            <span class="meta-chip device">💻 김도윤 PC</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">OCR/NER 자동 추출 결과</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">자동 추출 미리보기</span>
+                <div class="biz-form-card">
+                  <div class="bf-title">📋 할 일 자동 입력 (2건 묶음)</div>
+                  <div class="bf-rows">
+                    <div class="bf-row"><span class="label">고객명 (OCR)</span><span class="value">홍길동</span></div>
+                    <div class="bf-row"><span class="label">주민번호 (OCR)</span><span class="value">8503**-1******</span></div>
+                    <div class="bf-row"><span class="label">주소 (OCR)</span><span class="value">서울 강남구 …</span></div>
+                    <div class="bf-row"><span class="label">보험종류 (NER)</span><span class="value">종신보험</span></div>
+                    <div class="bf-row"><span class="label">월납입 (NER)</span><span class="value">150,000원</span></div>
+                  </div>
+                </div>
+                <span class="task-chip processing">처리중 · 자동 등록 대기</span>
+              </div>
+              <div class="live-callout">고객 5필드 + 보험종류·월납입 자동 추출 완료</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 5 -->
+      <article class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>고객 등록 + 가입설계동의서 비즈폼 발송</h3>
+          <p class="desc">"고객 등록" 버튼으로 SFA에 고객을 즉시 등록하고, 가입설계동의서 비즈폼을 김철수 모바일로 inline 발송한다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">⚙ SFA</span>
+            <span class="meta-chip device">💻 김도윤 PC</span>
+            <span class="meta-chip device">📱 김철수 Mobile</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">김철수 모바일 (비즈폼 카드)</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#GA협업 · 김철수</span>
+                <div class="cwk-bubble me"><div class="author">김도윤 (호스트)</div>고객 등록 완료했어요. 동의서 작성 부탁드립니다 🙏</div>
+                <div class="biz-form-card">
+                  <div class="bf-title">📋 가입설계동의서</div>
+                  <div class="bf-rows">
+                    <div class="bf-row"><span class="label">고객</span><span class="value">홍길동</span></div>
+                    <div class="bf-row"><span class="label">설계 유형</span><span class="value">종신보험 · 월 15만원</span></div>
+                  </div>
+                  <div class="bf-action">작성 · 서명 · 제출</div>
+                </div>
+              </div>
+            </div>
+            <div class="mockup-frame">
+              <div class="frame-label">김도윤 PC (SFA 등록 결과)</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">SFA · 고객 등록 결과</span>
+                <div class="cwk-bubble system">✓ 홍길동 고객 SFA 등록 완료 (#CST-2026-0413)</div>
+                <div class="cwk-bubble system">✓ 가입설계동의서 발송 (수신: 김철수)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 6 -->
+      <article class="step-card">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>장기 가입 설계 → PDF 자동 회신</h3>
+          <p class="desc">매니저가 "장기 가입 설계" 버튼을 누르면 외부 가입설계 시스템이 자동 실행되고, 결과 PDF가 협업 채널로 자동 전송된다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">⚙ Policy Engine</span>
+            <span class="meta-chip device">💻 김도윤 PC</span>
+            <span class="meta-chip device">📱 김철수 Mobile</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">자동 회신 PDF</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#GA협업 · 김철수</span>
+                <div class="cwk-bubble system">Policy Engine: 설계서 생성 완료 (3.2초)</div>
+                <div class="cwk-bubble me">
+                  <div class="author">자동 회신 · Policy</div>
+                  설계서가 생성되었습니다.<br/>
+                  <span class="attachment">📎 plan_홍길동_종신_2026.pdf</span>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 7 -->
+      <article class="step-card">
+        <div class="step-num">7</div>
+        <div class="step-body">
+          <h3>할 일 완료 + 처리 추적</h3>
+          <p class="desc">전체 흐름이 한 채널 안에서 완결된다. 사진 메시지의 task chip이 "완료"로 갱신되고, RightRail 할 일 패널에 처리 이력이 누적된다.</p>
+          <div class="step-meta">
+            <span class="meta-chip device">💻 김도윤 PC</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">PC · RightRail 할 일 패널</div>
+              <div class="cwk-pc">
+                <div class="cwk-pc-bezel">
+                  <div class="cwk-pc-screen">
+                    <div class="cwk-pc-rail">
+                      <div style="font-weight:700; margin-bottom:6px;">방 목록</div>
+                      <div class="rail-item active">김철수 · GA협업</div>
+                      <div class="rail-item">이수진 · 만기갱신</div>
+                    </div>
+                    <div class="cwk-pc-chat">
+                      <div class="cwk-bubble other" style="font-size:10px;">
+                        <div class="author">김철수</div>📷 customer_info.jpg
+                        <span class="task-chip done">완료</span>
+                      </div>
+                      <div class="cwk-bubble me" style="font-size:10px;">
+                        <div class="author">자동 회신</div>📎 plan_홍길동.pdf
+                      </div>
+                    </div>
+                    <div class="cwk-pc-rightrail">
+                      <div class="rr-title">할 일</div>
+                      <div class="rr-item">홍길동 설계 ✓</div>
+                      <div class="rr-item">동의서 ✓</div>
+                      <div class="rr-item">설계서 ✓</div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="live-callout">3개 시스템 + 1 채널 안에서 설계 한 건 완결</div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SECTION E — VALUE -->
+  <section class="section">
+    <h2><span class="num">E</span> After 가치 제안 + 핵심 메트릭 <span class="en">value</span></h2>
+    <div class="value-grid">
+      <div class="value-card">
+        <h4>🔍 비정형 → 정형화</h4>
+        <p>OCR/NER으로 사진·텍스트에서 자동으로 고객 정보와 설계 조건을 추출합니다.</p>
+      </div>
+      <div class="value-card">
+        <h4>📋 누락 → 자동 등록</h4>
+        <p>여러 메시지를 한 건의 할 일로 묶어 시스템에 완벽히 기록합니다.</p>
+      </div>
+      <div class="value-card">
+        <h4>🔗 분산 → 완결</h4>
+        <p>고객 등록 → 동의서 → 설계서까지 한 채널 안에서 끝납니다.</p>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="metric">
+        <div class="num">−75%</div>
+        <div class="label">업무 등록 시간 단축</div>
+      </div>
+      <div class="metric">
+        <div class="num">0%</div>
+        <div class="label">요청 누락 가능성</div>
+      </div>
+      <div class="metric">
+        <div class="num">100%</div>
+        <div class="label">처리 추적 가능성</div>
+      </div>
+      <div class="metric">
+        <div class="num">3↔1</div>
+        <div class="label">3개 시스템 → 1개 채널</div>
+      </div>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <strong>v2 시나리오:</strong>
+      <code>src/scenarios/insurance-1m/</code>
+    </div>
+    <div>제품체험관 v2 · 4개 고객사 메인 시나리오 · 2026</div>
+  </footer>
+
+</div>
+
+</body>
+</html>

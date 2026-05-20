@@ -1,0 +1,649 @@
+<!doctype html>
+<html lang="ko">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>우리금융캐피탈 강남BIZ AG 단체방 · Cowork+ 시나리오 #02</title>
+  <link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin />
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/static/pretendard.min.css" />
+  <style>
+    :root {
+      --brand-primary: #4F46E5; --brand-primary-soft: #EEF2FF; --brand-primary-deep: #3730A3;
+      --kakao-yellow: #FEE500; --kakao-bubble-me: #FFEB33; --kakao-bg: #B2C7DA; --kakao-ink: #371D1E;
+      --ink-primary: #0F172A; --ink-secondary: #475569; --ink-muted: #94A3B8;
+      --surface-canvas: #F8FAFC; --surface-border: #E2E8F0; --surface-subtle: #F1F5F9;
+      --accent-emerald: #10B981; --accent-emerald-soft: #D1FAE5;
+      --accent-amber: #F59E0B; --accent-amber-soft: #FEF3C7;
+      --accent-rose: #EF4444; --accent-rose-soft: #FEE2E2;
+      --accent-sky: #0EA5E9;
+    }
+    * { box-sizing: border-box; }
+    html, body { margin: 0; padding: 0; }
+    body { font-family: 'Pretendard', -apple-system, BlinkMacSystemFont, system-ui, sans-serif; color: var(--ink-primary); background: var(--surface-canvas); line-height: 1.55; -webkit-font-smoothing: antialiased; }
+    a { color: var(--brand-primary); text-decoration: none; } a:hover { text-decoration: underline; }
+    .topbar { position: sticky; top: 0; z-index: 50; background: rgba(255,255,255,0.92); backdrop-filter: blur(8px); border-bottom: 1px solid var(--surface-border); padding: 12px 24px; display: flex; align-items: center; gap: 16px; }
+    .topbar a.back { display: inline-flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--ink-secondary); padding: 6px 10px; border-radius: 8px; }
+    .topbar a.back:hover { background: var(--surface-subtle); text-decoration: none; }
+    .topbar .crumbs { font-size: 12px; color: var(--ink-muted); }
+    .container { max-width: 1200px; margin: 0 auto; padding: 32px 24px 80px; }
+    .hero { background: linear-gradient(135deg, #1E3A8A 0%, #3730A3 50%, #6366F1 100%); color: white; border-radius: 24px; padding: 40px 40px 44px; position: relative; overflow: hidden; box-shadow: 0 24px 48px -16px rgba(67, 56, 202, 0.4); }
+    .hero::after { content: ''; position: absolute; inset: 0; background: radial-gradient(circle at 90% 10%, rgba(255,255,255,0.18), transparent 50%); pointer-events: none; }
+    .hero .eyebrow { font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.8; margin-bottom: 12px; }
+    .hero h1 { font-size: 38px; font-weight: 800; letter-spacing: -0.02em; margin: 0 0 12px; line-height: 1.15; }
+    .hero .subtitle { font-size: 17px; opacity: 0.88; margin: 0 0 24px; max-width: 720px; }
+    .hero .chips { display: flex; flex-wrap: wrap; gap: 8px; }
+    .chip { display: inline-flex; align-items: center; gap: 4px; padding: 5px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; background: rgba(255,255,255,0.18); backdrop-filter: blur(4px); }
+    .section { margin-top: 56px; }
+    .section h2 { font-size: 22px; font-weight: 800; letter-spacing: -0.01em; margin: 0 0 6px; display: flex; align-items: baseline; gap: 10px; }
+    .section h2 .num { font-size: 13px; font-weight: 700; color: var(--brand-primary); background: var(--brand-primary-soft); padding: 3px 8px; border-radius: 6px; letter-spacing: 0.04em; }
+    .section h2 .en { font-size: 12px; font-weight: 500; color: var(--ink-muted); margin-left: auto; }
+    .section .lead { color: var(--ink-secondary); margin: 0 0 24px; max-width: 760px; }
+    .personas { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .persona { display: flex; gap: 14px; align-items: center; background: white; border: 1px solid var(--surface-border); border-radius: 14px; padding: 16px 18px; }
+    .persona .avatar { width: 48px; height: 48px; flex-shrink: 0; border-radius: 50%; display: grid; place-items: center; color: white; font-weight: 700; font-size: 18px; }
+    .persona .role-tag { display: inline-block; padding: 2px 8px; border-radius: 4px; font-size: 10px; font-weight: 700; background: var(--surface-subtle); color: var(--ink-secondary); margin-bottom: 4px; }
+    .persona .role-tag.internal { background: var(--brand-primary-soft); color: var(--brand-primary); }
+    .persona .role-tag.external { background: #FEF3C7; color: #92400E; }
+    .persona .name { font-weight: 700; font-size: 15px; }
+    .persona .role { font-size: 12px; color: var(--ink-muted); margin-top: 2px; }
+    .diagram { background: white; border: 1px solid var(--surface-border); border-radius: 16px; padding: 24px; }
+    .diagram .panels-row { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; align-items: start; }
+    .diagram .panel-title { margin: 0 0 10px; font-size: 10px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .diagram .systems-col { display: flex; flex-direction: column; gap: 8px; }
+    .sys-node { min-height: 56px; border: 2px solid var(--surface-border); border-radius: 10px; background: white; padding: 10px 12px; display: flex; flex-direction: column; justify-content: center; position: relative; }
+    .sys-node.active { border-color: var(--brand-primary); box-shadow: 0 0 0 4px rgba(79,70,229,0.12); }
+    .sys-node .sys-label { font-weight: 700; font-size: 13px; }
+    .sys-node .sys-en { font-size: 10px; color: var(--ink-muted); margin-top: 2px; }
+    .sys-node .sys-icon { position: absolute; top: 10px; right: 10px; width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; font-size: 13px; }
+    .sys-node[data-accent="indigo"] .sys-icon { background: #EEF2FF; color: var(--brand-primary); }
+    .sys-node[data-accent="emerald"] .sys-icon { background: #D1FAE5; color: #047857; }
+    .sys-node[data-accent="amber"] .sys-icon { background: #FEF3C7; color: #B45309; }
+    .sys-node[data-accent="sky"] .sys-icon { background: #E0F2FE; color: #0369A1; }
+    .sys-node[data-accent="rose"] .sys-icon { background: #FEE2E2; color: #B91C1C; }
+    .diagram .devices-area { display: flex; flex-direction: column; gap: 8px; }
+    .device-card { background: var(--surface-subtle); border-radius: 12px; padding: 12px 14px; border: 1px solid var(--surface-border); display: flex; flex-direction: column; gap: 4px; }
+    .device-card .device-kind { display: inline-flex; align-items: center; gap: 6px; font-size: 10px; font-weight: 700; color: var(--ink-muted); text-transform: uppercase; letter-spacing: 0.08em; }
+    .device-card .device-name { font-weight: 700; font-size: 14px; color: var(--ink-primary); }
+    .device-card .device-role { font-size: 12px; color: var(--ink-secondary); }
+    .device-card .device-screen-hint { margin-top: 4px; padding: 6px 10px; background: white; border-radius: 6px; font-size: 11px; color: var(--ink-muted); border: 1px dashed var(--surface-border); }
+    /* Connection Map */
+    .connection-map { margin-top: 20px; padding-top: 16px; border-top: 1px dashed var(--surface-border); }
+    .conn-table { display: flex; flex-direction: column; }
+    .conn-row { display: grid; grid-template-columns: 1.6fr 32px 2fr 1.8fr; gap: 12px; align-items: center; padding: 10px 4px; border-bottom: 1px solid var(--surface-border); }
+    .conn-row:last-child { border-bottom: none; }
+    .conn-from { display: flex; align-items: center; gap: 8px; font-weight: 600; color: var(--ink-primary); font-size: 12px; padding: 6px 10px; background: var(--surface-subtle); border-radius: 8px; border-left: 3px solid var(--brand-primary); }
+    .conn-from.rose { border-left-color: var(--accent-rose); }
+    .conn-arrow { color: var(--brand-primary); font-weight: 700; font-size: 16px; text-align: center; }
+    .conn-arrow.bidi::before { content: '⇄'; }
+    .conn-arrow.uni::before { content: '→'; }
+    .conn-to { display: flex; gap: 4px; flex-wrap: wrap; }
+    .conn-dev { display: inline-flex; align-items: center; gap: 4px; background: var(--brand-primary-soft); color: var(--brand-primary); padding: 4px 8px; border-radius: 6px; font-size: 11px; font-weight: 600; }
+    .conn-label { color: var(--ink-secondary); font-size: 11px; font-style: italic; }
+    .before-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; align-items: start; }
+    .before-issues { background: linear-gradient(180deg, #FFF1F2 0%, #FEE2E2 100%); border: 1px solid #FECDD3; border-radius: 16px; padding: 24px; }
+    .before-issues h3 { margin: 0 0 6px; font-size: 16px; font-weight: 700; color: #9F1239; display: flex; align-items: center; gap: 8px; }
+    .before-issues h3::before { content: '⚠'; font-size: 18px; }
+    .before-issues p { color: #7F1D1D; font-size: 13px; margin: 0 0 14px; }
+    .before-issues ul { margin: 0; padding: 0; list-style: none; }
+    .before-issues li { padding: 10px 12px; background: rgba(255,255,255,0.7); border-radius: 10px; margin-bottom: 8px; font-size: 13px; color: #7F1D1D; border-left: 3px solid #DC2626; }
+    .before-issues li:last-child { margin-bottom: 0; }
+    .kakao-phone { width: 280px; aspect-ratio: 9 / 19.5; margin: 0 auto; background: #1F1F1F; border-radius: 36px; padding: 10px; position: relative; box-shadow: 0 24px 60px -20px rgba(0,0,0,0.25); }
+    .kakao-phone::before { content: ''; position: absolute; top: 14px; left: 50%; transform: translateX(-50%); width: 90px; height: 24px; background: #1F1F1F; border-radius: 12px; z-index: 2; }
+    .kakao-screen { width: 100%; height: 100%; background: var(--kakao-bg); border-radius: 28px; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+    .kakao-header { background: white; padding: 36px 14px 10px; border-bottom: 1px solid #E5E7EB; display: flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 700; color: var(--ink-primary); }
+    .kakao-header .back-arrow { color: var(--ink-muted); }
+    .kakao-header .name { flex: 1; }
+    .kakao-header .count { font-size: 11px; color: var(--ink-muted); font-weight: 600; }
+    .kakao-header .hamburger { color: var(--ink-muted); }
+    .kakao-body { flex: 1; padding: 12px; overflow-y: auto; display: flex; flex-direction: column; gap: 8px; }
+    .kakao-bubble { max-width: 78%; padding: 8px 11px; font-size: 12px; line-height: 1.45; position: relative; }
+    .kakao-bubble.other { align-self: flex-start; background: white; color: var(--ink-primary); border-radius: 4px 16px 16px 16px; }
+    .kakao-bubble.me { align-self: flex-end; background: var(--kakao-bubble-me); color: var(--kakao-ink); border-radius: 16px 4px 16px 16px; }
+    .kakao-bubble .author { font-size: 11px; font-weight: 700; color: var(--ink-secondary); margin-bottom: 4px; }
+    .kakao-bubble.me .author { color: var(--kakao-ink); opacity: 0.7; }
+    .kakao-bubble-row { display: flex; gap: 4px; align-items: flex-end; }
+    .kakao-bubble-row.me { justify-content: flex-end; }
+    .kakao-bubble-row .time { font-size: 10px; color: rgba(31,17,18,0.6); }
+    .before-label { display: inline-block; font-size: 11px; font-weight: 700; letter-spacing: 0.08em; text-transform: uppercase; color: #B91C1C; margin-bottom: 12px; padding: 3px 8px; background: #FEE2E2; border-radius: 4px; }
+    .steps-track { display: flex; flex-direction: column; gap: 28px; }
+    .step-card { display: grid; grid-template-columns: 56px 1fr; gap: 20px; background: white; border: 1px solid var(--surface-border); border-radius: 18px; padding: 24px; position: relative; overflow: hidden; }
+    .step-card::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 4px; background: var(--brand-primary); }
+    .step-num { display: grid; place-items: center; width: 56px; height: 56px; background: var(--brand-primary); color: white; border-radius: 14px; font-weight: 800; font-size: 20px; box-shadow: 0 4px 12px rgba(79,70,229,0.3); }
+    .step-body h3 { margin: 0 0 6px; font-size: 18px; font-weight: 800; letter-spacing: -0.01em; }
+    .step-body .desc { margin: 0 0 14px; color: var(--ink-secondary); font-size: 14px; }
+    .step-meta { display: flex; flex-wrap: wrap; gap: 6px; margin-bottom: 14px; }
+    .meta-chip { display: inline-flex; align-items: center; gap: 4px; padding: 4px 10px; border-radius: 999px; font-size: 11px; font-weight: 600; background: var(--brand-primary-soft); color: var(--brand-primary); }
+    .meta-chip.system { background: #E0E7FF; color: var(--brand-primary-deep); }
+    .meta-chip.device { background: #ECFDF5; color: #047857; }
+    .meta-chip.connection { background: #FFEDD5; color: #C2410C; }
+    .step-mockup-row { display: grid; grid-template-columns: repeat(auto-fit, minmax(260px, 1fr)); gap: 14px; }
+    .mockup-frame { background: var(--surface-subtle); border-radius: 12px; padding: 14px; border: 1px solid var(--surface-border); }
+    .mockup-frame .frame-label { font-size: 10px; font-weight: 700; color: var(--ink-muted); letter-spacing: 0.08em; text-transform: uppercase; margin-bottom: 8px; display: flex; justify-content: space-between; align-items: center; }
+    .mockup-frame .frame-label .badge { background: var(--brand-primary); color: white; font-size: 9px; padding: 2px 6px; border-radius: 4px; letter-spacing: 0.04em; }
+    .cwk-chat { background: white; border: 1px solid var(--surface-border); border-radius: 10px; padding: 10px; display: flex; flex-direction: column; gap: 6px; min-height: 60px; }
+    .cwk-header { font-size: 11px; font-weight: 700; color: var(--brand-primary); padding: 4px 8px; background: var(--brand-primary-soft); border-radius: 6px; margin-bottom: 4px; display: inline-flex; align-self: flex-start; align-items: center; gap: 6px; }
+    .cwk-header .ppl { background: white; color: var(--ink-secondary); padding: 1px 6px; border-radius: 999px; font-size: 9px; font-weight: 700; }
+    .cwk-bubble { max-width: 88%; padding: 6px 10px; font-size: 12px; line-height: 1.45; border-radius: 10px; }
+    .cwk-bubble.me { background: var(--brand-primary); color: white; align-self: flex-end; border-bottom-right-radius: 2px; }
+    .cwk-bubble.other { background: white; color: var(--ink-primary); border: 1px solid var(--surface-border); align-self: flex-start; border-bottom-left-radius: 2px; }
+    .cwk-bubble.system { align-self: center; background: var(--surface-subtle); color: var(--ink-muted); font-size: 10px; padding: 4px 10px; border-radius: 8px; }
+    .cwk-bubble .author { font-size: 10px; font-weight: 700; opacity: 0.85; margin-bottom: 2px; }
+    .cwk-bubble.me .author { color: rgba(255,255,255,0.85); }
+    .cwk-bubble.other .author { color: var(--ink-secondary); }
+    .cwk-bubble.secret { background: #FFFBEB; border: 1px dashed #FBBF24; color: #92400E; align-self: flex-end; }
+    .cwk-bubble.secret .author { color: #92400E; }
+    .cwk-bubble.secret-locked { background: var(--surface-subtle); color: var(--ink-muted); font-style: italic; align-self: flex-end; border: 1px dashed var(--ink-muted); }
+    .cwk-bubble.secret-locked::before { content: '🔒 '; }
+    .task-chip { display: inline-flex; align-items: center; gap: 4px; padding: 3px 8px; border-radius: 999px; font-size: 10px; font-weight: 700; margin-top: 4px; }
+    .task-chip.processing { background: var(--accent-amber-soft); color: #92400E; }
+    .task-chip.done { background: var(--accent-emerald-soft); color: #065F46; }
+    .task-chip::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: currentColor; }
+    .attachment { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; background: rgba(255,255,255,0.15); border: 1px solid rgba(255,255,255,0.3); border-radius: 8px; font-size: 11px; font-weight: 600; }
+    .cwk-bubble.other .attachment { background: var(--surface-subtle); color: var(--ink-primary); border-color: var(--surface-border); }
+    .cwk-bubble.me .attachment { color: white; }
+    .biz-form-card { background: white; border: 2px solid var(--brand-primary); border-radius: 10px; padding: 10px; margin-top: 4px; }
+    .biz-form-card .bf-title { font-size: 11px; font-weight: 700; color: var(--brand-primary); display: flex; align-items: center; gap: 4px; margin-bottom: 6px; }
+    .biz-form-card .bf-rows { display: flex; flex-direction: column; gap: 4px; }
+    .biz-form-card .bf-row { display: flex; justify-content: space-between; font-size: 10px; padding: 4px 6px; background: var(--surface-subtle); border-radius: 4px; }
+    .biz-form-card .bf-row .label { color: var(--ink-muted); }
+    .biz-form-card .bf-row .value { font-weight: 600; color: var(--ink-primary); }
+    .biz-form-card .bf-action { margin-top: 8px; padding: 6px; text-align: center; background: var(--brand-primary); color: white; border-radius: 6px; font-size: 11px; font-weight: 700; }
+    .live-callout { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; background: #ECFDF5; border: 1px solid #6EE7B7; border-radius: 8px; font-size: 11px; font-weight: 600; color: #047857; margin-top: 8px; }
+    .live-callout::before { content: '✓'; }
+    .value-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr)); gap: 16px; }
+    .value-card { background: white; border: 1px solid var(--surface-border); border-radius: 14px; padding: 20px; border-left: 4px solid var(--brand-primary); }
+    .value-card h4 { margin: 0 0 6px; font-size: 14px; font-weight: 700; }
+    .value-card p { margin: 0; font-size: 13px; color: var(--ink-secondary); }
+    .metrics { margin-top: 16px; display: grid; grid-template-columns: repeat(auto-fit, minmax(160px, 1fr)); gap: 12px; }
+    .metric { background: linear-gradient(135deg, var(--brand-primary-soft) 0%, white 100%); border: 1px solid var(--brand-primary-soft); border-radius: 12px; padding: 16px; text-align: center; }
+    .metric .num { font-size: 28px; font-weight: 800; color: var(--brand-primary); letter-spacing: -0.02em; }
+    .metric .label { font-size: 11px; color: var(--ink-secondary); margin-top: 4px; }
+    footer { margin-top: 80px; padding-top: 24px; border-top: 1px solid var(--surface-border); font-size: 12px; color: var(--ink-muted); display: flex; flex-wrap: wrap; gap: 16px; justify-content: space-between; }
+    footer code { background: var(--surface-subtle); padding: 2px 6px; border-radius: 4px; font-size: 11px; color: var(--ink-secondary); }
+
+    /* AG 단체방 특유의 참여자 표시 */
+    .ag-participants {
+      display: grid; grid-template-columns: repeat(4, 1fr); gap: 6px;
+      padding: 8px; background: var(--surface-subtle); border-radius: 8px;
+      margin-bottom: 8px;
+    }
+    .ag-participants .pp {
+      background: white; padding: 6px; border-radius: 6px;
+      font-size: 9px; text-align: center; border: 1px solid var(--surface-border);
+    }
+    .ag-participants .pp .ag { color: var(--brand-primary); font-weight: 700; }
+    .ag-participants .pp .name { color: var(--ink-primary); margin-top: 2px; }
+    .ag-overflow {
+      grid-column: 1 / -1;
+      background: white; padding: 6px; border-radius: 6px;
+      font-size: 10px; text-align: center; color: var(--ink-secondary);
+      border: 1px dashed var(--surface-border);
+    }
+
+    @media (max-width: 880px) {
+      .before-grid { grid-template-columns: 1fr; }
+      .diagram .systems-col { position: static; width: 100%; flex-direction: row; flex-wrap: wrap; }
+      .diagram .systems-col .sys-node { flex: 1 1 45%; }
+      .diagram .devices-area { margin-left: 0; margin-top: 16px; grid-template-columns: 1fr; }
+      .diagram svg.lines { display: none; }
+    }
+  </style>
+</head>
+<body>
+
+<nav class="topbar">
+  <a href="./index.html" class="back">
+    <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="15 18 9 12 15 6"></polyline></svg>
+    시나리오 목록
+  </a>
+  <span class="crumbs">제품체험관 v2 · 4개 고객사 메인 시나리오 · #02</span>
+</nav>
+
+<div class="container">
+
+  <header class="hero">
+    <div class="eyebrow">Scenario #02 · 금융/캐피탈</div>
+    <h1>우리금융캐피탈 강남BIZ AG 단체방</h1>
+    <p class="subtitle">70명의 모집인이 같은 AG에 소속된 단체방. 비밀 메시지로 내부 검토를 보호하고, 비즈폼·신용평가·승인까지 단체방 안에서 처리한다.</p>
+    <div class="chips">
+      <span class="chip">🏦 금융/캐피탈</span>
+      <span class="chip">💬 70명 단체방 (shared-room)</span>
+      <span class="chip">⏱ 6분 · 6단계</span>
+      <span class="chip">🔗 v2 id: manufacturing-n1</span>
+    </div>
+  </header>
+
+  <!-- SECTION A -->
+  <section class="section">
+    <h2><span class="num">A</span> 등장 페르소나 <span class="en">cast</span></h2>
+    <p class="lead">호스트 1명 + 보조 1명(내부) + 70명의 모집인(외부). 모든 참여자가 "강남BIZ AG"라는 같은 영업그룹에 속한다.</p>
+    <div class="personas">
+      <div class="persona">
+        <div class="avatar" style="background:#4F46E5;">김</div>
+        <div>
+          <span class="role-tag internal">HOST · PC</span>
+          <div class="name">김도윤</div>
+          <div class="role">강남BIZ AG 매니저</div>
+        </div>
+      </div>
+      <div class="persona">
+        <div class="avatar" style="background:#7C3AED;">이</div>
+        <div>
+          <span class="role-tag internal">SUB · PC</span>
+          <div class="name">이수진</div>
+          <div class="role">신용 검토 담당</div>
+        </div>
+      </div>
+      <div class="persona">
+        <div class="avatar" style="background:#10B981;">홍</div>
+        <div>
+          <span class="role-tag external">EXTERNAL</span>
+          <div class="name">강남BIZ AG / 홍길동</div>
+          <div class="role">한울모빌리티 (질의 당사자)</div>
+        </div>
+      </div>
+      <div class="persona">
+        <div class="avatar" style="background:#F59E0B;">+67</div>
+        <div>
+          <span class="role-tag external">EXTERNAL</span>
+          <div class="name">+67명 모집인</div>
+          <div class="role">강남BIZ AG 소속</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION B -->
+  <section class="section">
+    <h2><span class="num">B</span> 시스템 연계 <span class="en">systems</span></h2>
+    <p class="lead">단체방 안에서 비밀 메시지로 내부 검토를 보호하고, 비즈폼으로 정형 자료를 받아 신용평가 → 승인 워크플로우로 흐른다.</p>
+    <div class="diagram">
+      <div class="panels-row">
+        <div>
+          <h4 class="panel-title">시스템 (4)</h4>
+          <div class="systems-col">
+            <div class="sys-node" data-accent="rose">
+              <div class="sys-icon">🔒</div>
+              <div class="sys-label">비밀 메시지</div>
+              <div class="sys-en">Secret Message</div>
+            </div>
+            <div class="sys-node" data-accent="indigo">
+              <div class="sys-icon">📋</div>
+              <div class="sys-label">비즈폼</div>
+              <div class="sys-en">BizForm Engine</div>
+            </div>
+            <div class="sys-node" data-accent="amber">
+              <div class="sys-icon">📊</div>
+              <div class="sys-label">신용평가</div>
+              <div class="sys-en">Credit Score</div>
+            </div>
+            <div class="sys-node" data-accent="emerald">
+              <div class="sys-icon">✅</div>
+              <div class="sys-label">승인 워크플로우</div>
+              <div class="sys-en">Approval</div>
+            </div>
+          </div>
+        </div>
+        <div>
+          <h4 class="panel-title">디바이스 (2)</h4>
+          <div class="devices-area">
+            <div class="device-card">
+              <span class="device-kind">💻 Workspace · PC × 2</span>
+              <div class="device-name">김도윤 · 이수진</div>
+              <div class="device-role">단체방 호스트 + 신용 검토 보조</div>
+              <div class="device-screen-hint">참여자 70명 단체방 · 비밀 메시지 모드 · 비즈폼 RightRail</div>
+            </div>
+            <div class="device-card">
+              <span class="device-kind">📱 Guest × 70 (4 visible)</span>
+              <div class="device-name">강남BIZ AG / 모집인 70명</div>
+              <div class="device-role">"AG명 / 이름" 형식 참여</div>
+              <div class="device-screen-hint">한 단체방 · 본인은 비밀 메시지 풀 표시, 타인은 🔒 placeholder</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="connection-map">
+        <h4 class="panel-title">연결 지도 (Connection Map)</h4>
+        <div class="conn-table">
+          <div class="conn-row">
+            <span class="conn-from rose">🔒 비밀 메시지</span>
+            <span class="conn-arrow uni"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 김도윤 PC</span>
+              <span class="conn-dev">📱 대상자 1명</span>
+            </span>
+            <span class="conn-label">단체방 안에서 1명에게만 풀 표시 · 나머지 69명은 🔒 placeholder</span>
+          </div>
+          <div class="conn-row">
+            <span class="conn-from">📋 비즈폼</span>
+            <span class="conn-arrow bidi"></span>
+            <span class="conn-to">
+              <span class="conn-dev">📱 모집인</span>
+              <span class="conn-dev">💻 김도윤·이수진 PC</span>
+            </span>
+            <span class="conn-label">여신 한도 요청 정형 수집 (견적번호·사업자등록증)</span>
+          </div>
+          <div class="conn-row">
+            <span class="conn-from">📊 신용평가</span>
+            <span class="conn-arrow uni"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 이수진 PC</span>
+            </span>
+            <span class="conn-label">비즈폼 제출 시 자동 실행 → A등급 통과 결과 RightRail 표시</span>
+          </div>
+          <div class="conn-row">
+            <span class="conn-from">✅ 승인 워크플로우</span>
+            <span class="conn-arrow uni"></span>
+            <span class="conn-to">
+              <span class="conn-dev">💻 김도윤 PC</span>
+              <span class="conn-dev">📱 70명 단체방</span>
+            </span>
+            <span class="conn-label">호스트 승인 → task chip 완료 · 단체방에 자동 공지</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION C -->
+  <section class="section">
+    <h2><span class="num">C</span> Before · 카카오톡 단체방 <span class="en">limitations</span></h2>
+    <p class="lead">단체 카톡방에서는 내부 검토 의견을 숨길 수 없다. 70명에게 다 보이거나, 비공식 1:1로 빼서 말해야 한다.</p>
+    <div class="before-grid">
+      <div class="before-issues">
+        <span class="before-label">Before</span>
+        <h3>단체 카톡방 운영의 한계</h3>
+        <p>모든 메시지가 70명 모두에게 노출. 정형 자료 수집·승인 추적 모두 어렵다.</p>
+        <ul>
+          <li>내부 신용도 검토 의견을 단체방에서 어떻게도 숨길 수 없음</li>
+          <li>비공식 1:1로 빼서 말하면 단체방과 1:1 이력이 단절되어 추적 불가</li>
+          <li>여신·재무 자료를 메모/사진으로 받아 정형화·검증 불가</li>
+          <li>여러 거래처 문의를 메모장으로 수동 추적 — 누가 어디까지 처리했는지 모름</li>
+        </ul>
+      </div>
+      <div>
+        <div class="kakao-phone">
+          <div class="kakao-screen">
+            <div class="kakao-header">
+              <span class="back-arrow">‹</span>
+              <span class="name">강남BIZ AG 모집인방</span>
+              <span class="count">70</span>
+              <span class="hamburger">☰</span>
+            </div>
+            <div class="kakao-body">
+              <div class="kakao-bubble-row">
+                <div class="kakao-bubble other">
+                  <div class="author">한울모빌리티 홍길동</div>
+                  여신 한도 5천→1억 상향 가능한가요?
+                </div>
+              </div>
+              <div class="kakao-bubble-row">
+                <div class="kakao-bubble other">
+                  <div class="author">매니저</div>
+                  네 검토 후 안내드릴게요
+                </div>
+              </div>
+              <div class="kakao-bubble-row">
+                <div class="kakao-bubble other" style="background:#FEE2E2;">
+                  <div class="author">신용 담당</div>
+                  ※ 내부 메모: 한울은 작년 연체 1회… 어떻게 보내야 할지 ㅠ
+                </div>
+              </div>
+              <div class="kakao-bubble-row me">
+                <span class="time">14:30</span>
+                <div class="kakao-bubble me">아 잠시만요 1:1 로 보내겠습니다…</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SECTION D -->
+  <section class="section">
+    <h2><span class="num">D</span> After · Cowork+ 단계별 흐름 <span class="en">step-by-step</span></h2>
+    <p class="lead">한 단체방 안에서 비밀 메시지·비즈폼·신용평가·승인까지 끝난다. 정보 노출 통제 + 정형 자료 수집 + 처리 추적이 동시에.</p>
+
+    <div class="steps-track">
+
+      <!-- STEP 1 -->
+      <article class="step-card">
+        <div class="step-num">1</div>
+        <div class="step-body">
+          <h3>강남BIZ AG 단체방 운영 소개</h3>
+          <p class="desc">대화방 이름은 AG명 그대로 "#강남BIZ AG". 70명 참여자가 모두 "강남BIZ AG / 이름" 형식으로 표시되어, 같은 영업그룹임을 시각적으로 인지한다.</p>
+          <div class="step-meta">
+            <span class="meta-chip device">💻 김도윤 PC</span>
+            <span class="meta-chip device">📱 70명 모집인</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">단체방 헤더 + 참여자 미리보기 <span class="badge">70명</span></div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#강남BIZ AG <span class="ppl">👥 70</span></span>
+                <div class="ag-participants">
+                  <div class="pp"><div class="ag">강남BIZ AG</div><div class="name">홍길동</div></div>
+                  <div class="pp"><div class="ag">강남BIZ AG</div><div class="name">박철수</div></div>
+                  <div class="pp"><div class="ag">강남BIZ AG</div><div class="name">이영희</div></div>
+                  <div class="pp"><div class="ag">강남BIZ AG</div><div class="name">정민지</div></div>
+                  <div class="ag-overflow">+ 강남BIZ AG / 외 66명</div>
+                </div>
+                <div class="cwk-bubble system">강남BIZ AG 단체방 — 호스트 김도윤 · 신용 검토 이수진</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 2 -->
+      <article class="step-card">
+        <div class="step-num">2</div>
+        <div class="step-body">
+          <h3>모집인 문의 + 호스트 답변 (할 일 자동 등록)</h3>
+          <p class="desc">한울모빌리티 모집인 홍길동이 여신 한도 상향을 단체방에 문의한다. 호스트가 답변하면 해당 메시지에 "처리중" task chip이 부착된다.</p>
+          <div class="step-meta">
+            <span class="meta-chip device">📱 강남BIZ AG / 홍길동</span>
+            <span class="meta-chip device">💻 김도윤 PC</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">단체방 메시지</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#강남BIZ AG <span class="ppl">👥 70</span></span>
+                <div class="cwk-bubble other">
+                  <div class="author">강남BIZ AG / 홍길동 · 한울모빌리티</div>
+                  여신 한도 5천→1억 상향 요청드립니다.<br/>
+                  사업자등록증 별도 보내드릴까요?
+                </div>
+                <div class="cwk-bubble me">
+                  <div class="author">김도윤 (호스트)</div>
+                  네, 신용도 검토 후 안내 드리겠습니다 🙏
+                  <div><span class="task-chip processing">처리중</span></div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 3 -->
+      <article class="step-card">
+        <div class="step-num">3</div>
+        <div class="step-body">
+          <h3>비밀 메시지 모드 — 대상자만 풀 표시</h3>
+          <p class="desc">호스트가 비밀 메시지 모드로 전환해 내부 검토 결과를 홍길동에게만 보내고, 나머지 모집인 화면에는 🔒 placeholder 만 표시된다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">🔒 Secret</span>
+            <span class="meta-chip device">📱 홍길동 (수신자)</span>
+            <span class="meta-chip device">📱 다른 모집인 (placeholder)</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">홍길동 화면 (수신 대상)</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#강남BIZ AG <span class="ppl">👥 70</span></span>
+                <div class="cwk-bubble other">
+                  <div class="author">강남BIZ AG / 홍길동</div>
+                  여신 한도 5천→1억 상향 요청드립니다.
+                </div>
+                <div class="cwk-bubble secret">
+                  <div class="author">🔒 김도윤 · 비밀 메시지 (나에게만 표시)</div>
+                  사전 검토 결과 A등급 — 1억까지 무리 없습니다.<br/>
+                  비즈폼 작성 부탁드립니다.
+                </div>
+              </div>
+            </div>
+            <div class="mockup-frame">
+              <div class="frame-label">다른 모집인 화면 (placeholder)</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#강남BIZ AG <span class="ppl">👥 70</span></span>
+                <div class="cwk-bubble other">
+                  <div class="author">강남BIZ AG / 홍길동</div>
+                  여신 한도 5천→1억 상향 요청드립니다.
+                </div>
+                <div class="cwk-bubble secret-locked">
+                  김도윤님이 일부 대상에게만 보낸 메시지입니다
+                </div>
+              </div>
+            </div>
+          </div>
+          <div class="live-callout">비밀 메시지 1건 — 수신 대상자 1명만 풀 표시</div>
+        </div>
+      </article>
+
+      <!-- STEP 4 -->
+      <article class="step-card">
+        <div class="step-num">4</div>
+        <div class="step-body">
+          <h3>비즈폼(여신 한도 요청) 발송</h3>
+          <p class="desc">홍길동의 햄버거 메뉴에서 "비즈폼"을 선택하면, 단체방에 inline 비즈폼 카드가 등장한다. 견적번호·요청내용·사업자등록증을 작성한다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">📋 BizForm</span>
+            <span class="meta-chip device">📱 홍길동</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">홍길동 모바일 (비즈폼 작성)</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#강남BIZ AG</span>
+                <div class="cwk-bubble system">햄버거 메뉴 → 비즈폼 → 여신 한도 요청</div>
+                <div class="biz-form-card">
+                  <div class="bf-title">📋 여신 한도 요청</div>
+                  <div class="bf-rows">
+                    <div class="bf-row"><span class="label">견적번호</span><span class="value">WC-2026-00128</span></div>
+                    <div class="bf-row"><span class="label">현재 한도</span><span class="value">5,000만원</span></div>
+                    <div class="bf-row"><span class="label">요청 한도</span><span class="value">10,000만원</span></div>
+                    <div class="bf-row"><span class="label">사업자등록증</span><span class="value">📎 첨부됨</span></div>
+                  </div>
+                  <div class="bf-action">제출</div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 5 -->
+      <article class="step-card">
+        <div class="step-num">5</div>
+        <div class="step-body">
+          <h3>비즈폼 제출 → 신용도 검토</h3>
+          <p class="desc">제출된 비즈폼은 단체방에 inline 카드로 등장하고, 신용평가 시스템이 자동 실행되어 "A등급 통과" 결과를 RightRail에 표시한다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">📊 Credit Score</span>
+            <span class="meta-chip device">💻 김도윤 · 이수진 PC</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">PC RightRail · 비즈폼 + 신용평가</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">접수된 비즈폼</span>
+                <div class="biz-form-card">
+                  <div class="bf-title">📋 WC-2026-00128 · 한울모빌리티</div>
+                  <div class="bf-rows">
+                    <div class="bf-row"><span class="label">요청</span><span class="value">한도 1억원</span></div>
+                    <div class="bf-row"><span class="label">신용평가</span><span class="value" style="color:#047857;">✓ A등급 통과</span></div>
+                    <div class="bf-row"><span class="label">상태</span><span class="value">승인 대기</span></div>
+                  </div>
+                </div>
+                <div class="cwk-bubble system">Credit Engine · A등급 통과 (점수 824)</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+      <!-- STEP 6 -->
+      <article class="step-card">
+        <div class="step-num">6</div>
+        <div class="step-body">
+          <h3>승인 + task 완료 → 단체방 공지</h3>
+          <p class="desc">호스트가 "승인" 버튼을 누르면 task chip이 "완료"로 갱신되고, 결과 공지가 단체방에 자동 전송된다.</p>
+          <div class="step-meta">
+            <span class="meta-chip system">✅ Approval</span>
+            <span class="meta-chip device">💻 김도윤 PC</span>
+            <span class="meta-chip device">📱 70명 단체방</span>
+          </div>
+          <div class="step-mockup-row">
+            <div class="mockup-frame">
+              <div class="frame-label">단체방 최종 메시지</div>
+              <div class="cwk-chat">
+                <span class="cwk-header">#강남BIZ AG <span class="ppl">👥 70</span></span>
+                <div class="cwk-bubble me">
+                  <div class="author">김도윤 (호스트)</div>
+                  WC-2026-00128 한도 상향 승인되었습니다 ✅
+                </div>
+                <div class="cwk-bubble system">시스템 · 한울모빌리티 여신 한도 1억원 적용 완료</div>
+                <div class="cwk-bubble other" style="border-color:var(--accent-emerald);">
+                  <div class="author">강남BIZ AG / 홍길동</div>
+                  감사합니다 매니저님! 🙏
+                  <div><span class="task-chip done">완료</span></div>
+                </div>
+              </div>
+              <div class="live-callout">WC-2026-00128 승인 — 1억원 한도 적용</div>
+            </div>
+          </div>
+        </div>
+      </article>
+
+    </div>
+  </section>
+
+  <!-- SECTION E -->
+  <section class="section">
+    <h2><span class="num">E</span> After 가치 제안 + 핵심 메트릭 <span class="en">value</span></h2>
+    <div class="value-grid">
+      <div class="value-card">
+        <h4>🔒 정보 분할 공개</h4>
+        <p>단체방 안에서 비밀 메시지로 내부 검토 결과를 대상자에게만 전달합니다.</p>
+      </div>
+      <div class="value-card">
+        <h4>📋 정형 자료 수집</h4>
+        <p>비즈폼으로 거래처로부터 표준화된 자료를 받아 자동 검증·신용평가에 연결합니다.</p>
+      </div>
+      <div class="value-card">
+        <h4>👁 자동 추적</h4>
+        <p>할 일 chip으로 누가 어디까지 처리했는지 한눈에 보입니다.</p>
+      </div>
+    </div>
+    <div class="metrics">
+      <div class="metric"><div class="num">0%</div><div class="label">내부 검토 노출 리스크</div></div>
+      <div class="metric"><div class="num">100%</div><div class="label">처리 추적 가능성</div></div>
+      <div class="metric"><div class="num">−35%</div><div class="label">거래처 응답 시간</div></div>
+      <div class="metric"><div class="num">70 → 1</div><div class="label">70명 단체방 · 1개 채널</div></div>
+    </div>
+  </section>
+
+  <footer>
+    <div>
+      <strong>v2 시나리오:</strong>
+      <code>src/scenarios/manufacturing-n1/</code>
+    </div>
+    <div>제품체험관 v2 · 4개 고객사 메인 시나리오 · 2026</div>
+  </footer>
+
+</div>
+
+</body>
+</html>
